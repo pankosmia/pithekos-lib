@@ -8,10 +8,12 @@ import netContext from "./contexts/netContext";
 import bcvContext from "./contexts/bcvContext";
 import {doI18n} from "./lib/i18nLib";
 import {getJson, getAndSetJson, getText} from "./lib/getLib";
+import Header from "./components/Header";
 
 export {
     Spa,
     SpSpa,
+    Header,
     SpSpaPage,
     debugContext,
     i18nContext,
