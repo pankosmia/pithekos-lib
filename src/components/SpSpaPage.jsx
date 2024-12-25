@@ -3,16 +3,11 @@ import {Box, Grid2, Paper} from "@mui/material";
 import {BlockOutlined} from "@mui/icons-material";
 import {doI18n} from "../lib/i18nLib";
 import Header from "./Header";
-import AppWrapper from "./AppWrapper";
+
 function SpSpaPage({subtitleKey, widget, margin = 2, children, requireNet = false, netValue, debugValue, i18n}) {
     const {enableNet} = netValue;
     if (requireNet && !enableNet) {
         return (
-            <AppWrapper
-                netValue={netValue}
-                debugValue={debugValue}
-                i18n={i18n}
-            >
                 <Paper>
                     <Box sx={{
                         m: margin,
@@ -31,15 +26,9 @@ function SpSpaPage({subtitleKey, widget, margin = 2, children, requireNet = fals
                         </Grid2>
                     </Box>
                 </Paper>
-            </AppWrapper>
         );
     }
     return (
-        <AppWrapper
-            netValue={netValue}
-            debugValue={debugValue}
-            i18n={i18n}
-        >
             <Paper>
                 <Box>
                     <Header
@@ -57,7 +46,6 @@ function SpSpaPage({subtitleKey, widget, margin = 2, children, requireNet = fals
                     {children}
                 </Box>
             </Paper>
-        </AppWrapper>
     );
 }
 

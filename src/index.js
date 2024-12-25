@@ -1,6 +1,5 @@
 import Spa from "./components/Spa";
 import SpSpa from "./components/SpSpa";
-import SpSpaPage from "./components/SpSpaPage";
 import debugContext from "./contexts/debugContext";
 import i18nContext from "./contexts/i18nContext";
 import messagesContext from "./contexts/messagesContext";
@@ -14,7 +13,6 @@ export {
     Spa,
     SpSpa,
     Header,
-    SpSpaPage,
     debugContext,
     i18nContext,
     messagesContext,
