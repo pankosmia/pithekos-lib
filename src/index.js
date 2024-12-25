@@ -1,3 +1,4 @@
+import Spa from "./components/Spa";
 import SpSpa from "./components/SpSpa";
 import SpSpaPage from "./components/SpSpaPage";
 import debugContext from "./contexts/debugContext";
@@ -9,6 +10,7 @@ import {doI18n} from "./lib/i18nLib";
 import {getJson, getAndSetJson, getText} from "./lib/getLib";
 
 export {
+    Spa,
     SpSpa,
     SpSpaPage,
     debugContext,
