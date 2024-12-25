@@ -1,11 +1,13 @@
-import React from "react";
+import React, {useContext} from "react";
 import {Box, Grid2, Paper} from "@mui/material";
 import {BlockOutlined} from "@mui/icons-material";
 import {doI18n} from "../lib/i18nLib";
 import Header from "./Header";
+import netContext from "../contexts/netContext";
 
-function SpSpaPage({subtitleKey, widget, margin = 2, children, requireNet = false, netValue, debugValue, i18n}) {
-    const {enableNet} = netValue;
+
+function SpSpaPage({subtitleKey, widget, margin = 2, children, requireNet=false}) {
+    const {enableNet} = useContext(netContext);
     if (requireNet && !enableNet) {
         return (
                 <Paper>

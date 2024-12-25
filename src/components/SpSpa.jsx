@@ -10,9 +10,6 @@ function SpSpa({children, subtitleKey, requireNet}) {
             <SpSpaPage
                 subtitleKey={subtitleKey}
                 requireNet={requireNet}
-                netValue={netValue}
-                debugValue={debugValue}
-                i18n={i18n}
             >
                 {children}
             </SpSpaPage>
