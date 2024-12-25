@@ -4,10 +4,12 @@ import {BlockOutlined} from "@mui/icons-material";
 import {doI18n} from "../lib/i18nLib";
 import Header from "./Header";
 import netContext from "../contexts/netContext";
+import i18nContext from "../contexts/i18nContext";
 
 
 function SpSpaPage({subtitleKey, widget, margin = 2, children, requireNet=false}) {
     const {enableNet} = useContext(netContext);
+    const i18n = useContext(i18nContext);
     if (requireNet && !enableNet) {
         return (
                 <Paper>
