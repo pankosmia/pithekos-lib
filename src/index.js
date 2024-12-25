@@ -9,13 +9,11 @@ import bcvContext from "./contexts/bcvContext";
 import {doI18n} from "./lib/i18nLib";
 import {getJson, getAndSetJson, getText} from "./lib/getLib";
 import Header from "./components/Header";
-import AppWrapper from "./components/AppWrapper";
 
 export {
     Spa,
     SpSpa,
     Header,
-    AppWrapper,
     SpSpaPage,
     debugContext,
     i18nContext,

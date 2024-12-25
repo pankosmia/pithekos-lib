@@ -2,6 +2,7 @@ import React, {useEffect, useRef, useState} from "react";
 import {getJson} from "../lib/getLib";
 import {enqueueSnackbar, SnackbarProvider} from "notistack";
 import {fetchEventSource} from "@microsoft/fetch-event-source";
+import AppWrapper from './AppWrapper';
 
 function Spa({children}) {
     const [enableNet, _setEnableNet] = useState(false);
@@ -110,7 +111,13 @@ function Spa({children}) {
     const debugValue = {debug, setDebug, debugRef};
 
     return <SnackbarProvider maxSnack={3}>
+        <AppWrapper
+            netValue={netValue}
+            debugValue={debugValue}
+            i18n={i18n}
+        >
             {children}
+        </AppWrapper>
     </SnackbarProvider>
 }
 
