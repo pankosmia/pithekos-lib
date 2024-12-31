@@ -25,7 +25,7 @@ function AppWrapper({children, netValue, debugValue, i18n}) {
                 `${dataBits[2]} => ${dataBits[3]}`,
                 {
                     variant: dataBits[0],
-                    anchorOrigin: {vertical: "top", horizontal: "left"}
+                    anchorOrigin: {vertical: "bottom", horizontal: "right"}
                 }
             );
         }
