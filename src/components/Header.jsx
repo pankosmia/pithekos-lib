@@ -10,7 +10,7 @@ import {Public, PublicOff} from "@mui/icons-material";
 import {getJson} from "../lib/getLib";
 import SettingsIcon from "@mui/icons-material/Settings";
 
-function Header({subtitle, widget, currentId}) {
+function Header({titleKey, widget, currentId}) {
     const {messages, setMessages} = useContext(MessagesContext);
     const {enabledRef} = useContext(NetContext);
     const {debugRef} = useContext(DebugContext);
@@ -72,7 +72,7 @@ function Header({subtitle, widget, currentId}) {
                         </Menu>
                     </Grid2>
                     <Grid2 container size={{xs: 5, md: 4, lg: 3}} justifyContent="flex-start">
-                        {subtitle && subtitle.length > 0 && <Typography variant="h6">{doI18n(subtitle, i18n)}</Typography>}
+                        {titleKey && titleKey.length > 0 && <Typography variant="h6">{doI18n(titleKey, i18n)}</Typography>}
                     </Grid2>
                     <Grid2 container size={{xs: 3, md: 4, lg: 6}} justifyContent="flex-start">
                         {widget}

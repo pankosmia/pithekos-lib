@@ -7,7 +7,7 @@ import netContext from "../contexts/netContext";
 import i18nContext from "../contexts/i18nContext";
 
 
-function SpSpaPage({subtitleKey, widget, margin = 2, children, requireNet=false, currentId}) {
+function SpSpaPage({titleKey, widget, margin = 2, children, requireNet=false, currentId}) {
     const {enableNet} = useContext(netContext);
     const i18n = useContext(i18nContext);
     if (requireNet && !enableNet) {
@@ -36,7 +36,7 @@ function SpSpaPage({subtitleKey, widget, margin = 2, children, requireNet=false,
             <Paper>
                 <Box>
                     <Header
-                        subtitle={subtitleKey || null}
+                        titleKey={titleKey || null}
                         widget={widget || null}
                         margin={margin || 2}
                         currentId={currentId}
