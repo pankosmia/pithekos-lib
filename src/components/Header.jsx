@@ -22,7 +22,7 @@ function Header({subtitle, widget, currentId}) {
     useEffect(
         () => {
            const doFetch = async () => {
-               const fetched = await getJson("/list-clients", debugRef);
+               const fetched = await getJson("/list-clients", debugRef.current);
                if (fetched.ok) {
                    setMenuItems(fetched.json.filter(i => !i.exclude_from_menu));
                }
