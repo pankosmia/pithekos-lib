@@ -21,15 +21,19 @@ function Header({titleKey, widget, currentId}) {
 
     useEffect(
         () => {
-           const doFetch = async () => {
-               const fetched = await getJson("/list-clients", debugRef.current);
-               if (fetched.ok) {
-                   setMenuItems(fetched.json.filter(i => {return !i.exclude_from_menu && (debugRef.current || !i.requires.debug)}));
-               }
-           };
-           doFetch().then();
+            const doFetch = async () => {
+                const fetched = await getJson("/list-clients", debugRef.current);
+                if (fetched.ok) {
+                    setMenuItems(
+                        fetched.json.filter(
+                            i => !i.exclude_from_menu && (debugRef.current || !i.requires.debug)
+                        )
+                    );
+                }
+            };
+            doFetch().then();
         },
-        []
+        [debugRef.current]
     )
 
     return <div sx={{flexGrow: 1}}>
@@ -48,7 +52,7 @@ function Header({titleKey, widget, currentId}) {
                             aria-labelledby="app-button"
                             anchorEl={anchorEl}
                             open={open}
-                            onClose={()=>setAnchorEl(null)}
+                            onClose={() => setAnchorEl(null)}
                             anchorOrigin={{
                                 vertical: 'top',
                                 horizontal: 'left',
@@ -59,22 +63,25 @@ function Header({titleKey, widget, currentId}) {
                             }}
                         >{
                             menuItems
-                                .filter(c => (c.requires.debug && debugRef.current) || !c.requires.debug)
                                 .map(
-                                (mi, n) => mi.id === currentId ?
-                                    <MenuItem key={n}><i>{doI18n(`pages:${mi.id}:title`, i18n)}</i></MenuItem>:
-                                    <MenuItem
-                                    onClick={()=>{window.location.href = mi.url}}
-                                    disabled={mi.requires.net && !enabledRef.current}
-                                >{
-                                    doI18n(`pages:${mi.id}:title`, i18n)
-                                }</MenuItem>
+                                    (mi, n) => mi.id === currentId ?
+                                        <MenuItem key={n}><i>{doI18n(`pages:${mi.id}:title`, i18n)}</i></MenuItem> :
+                                        <MenuItem
+                                            key={n}
+                                            onClick={() => {
+                                                window.location.href = mi.url
+                                            }}
+                                            disabled={mi.requires.net && !enabledRef.current}
+                                        >{
+                                            doI18n(`pages:${mi.id}:title`, i18n)
+                                        }</MenuItem>
                                 )
                         }
                         </Menu>
                     </Grid2>
                     <Grid2 container size={{xs: 5, md: 4, lg: 3}} justifyContent="flex-start">
-                        {titleKey && titleKey.length > 0 && <Typography variant="h6">{doI18n(titleKey, i18n)}</Typography>}
+                        {titleKey && titleKey.length > 0 &&
+                            <Typography variant="h6">{doI18n(titleKey, i18n)}</Typography>}
                     </Grid2>
                     <Grid2 container size={{xs: 3, md: 4, lg: 6}} justifyContent="flex-start">
                         {widget}
@@ -111,12 +118,14 @@ function Header({titleKey, widget, currentId}) {
                                     aria-label="settings"
                                     sx={{ml: 2, color: "#AAAAAA"}}
                                 /> :
-                        <SettingsIcon
-                            color="inherit"
-                            aria-label="settings"
-                            sx={{ml: 2}}
-                            onClick={()=> {window.location.href = "/clients/settings"}}
-                        />
+                                <SettingsIcon
+                                    color="inherit"
+                                    aria-label="settings"
+                                    sx={{ml: 2}}
+                                    onClick={() => {
+                                        window.location.href = "/clients/settings"
+                                    }}
+                                />
                         }
                     </Grid2>
                 </Grid2>
