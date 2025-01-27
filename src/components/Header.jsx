@@ -58,8 +58,10 @@ function Header({titleKey, widget, currentId}) {
                                 horizontal: 'left',
                             }}
                         >{
-                            menuItems.map(
-                                ((mi, n) => mi.id === currentId ?
+                            menuItems
+                                .filter(c => (c.requires.debug && debugRef.current) || !c.requires.debug)
+                                .map(
+                                (mi, n) => mi.id === currentId ?
                                     <MenuItem key={n}><i>{doI18n(`pages:${mi.id}:title`, i18n)}</i></MenuItem>:
                                     <MenuItem
                                     onClick={()=>{window.location.href = mi.url}}
@@ -67,7 +69,7 @@ function Header({titleKey, widget, currentId}) {
                                 >{
                                     doI18n(`pages:${mi.id}:title`, i18n)
                                 }</MenuItem>
-                            )
+                                )
                         }
                         </Menu>
                     </Grid2>
