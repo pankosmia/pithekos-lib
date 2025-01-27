@@ -7,6 +7,7 @@ import netContext from "./contexts/netContext";
 import bcvContext from "./contexts/bcvContext";
 import {doI18n} from "./lib/i18nLib";
 import {getJson, getAndSetJson, getText} from "./lib/getLib";
+import {postEmptyJson} from "./lib/postLib";
 import Header from "./components/Header";
 
 export {
@@ -21,5 +22,6 @@ export {
     doI18n,
     getJson,
     getText,
-    getAndSetJson
+    getAndSetJson,
+    postEmptyJson
 };

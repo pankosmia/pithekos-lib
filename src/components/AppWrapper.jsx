@@ -7,14 +7,8 @@ import MessagesContext from "../contexts/messagesContext";
 import I18nContext from "../contexts/i18nContext";
 import {Box} from "@mui/material";
 
-function AppWrapper({children, netValue, debugValue, i18n}) {
+function AppWrapper({children, netValue, debugValue, bcvValue, i18n}) {
 
-    const [systemBcv, setSystemBcv] = useState({
-        bookCode: "TIT",
-        chapterNum: 1,
-        verseNum: 1
-    });
-    const bcvValue = {systemBcv, setSystemBcv};
     const [messages, setMessages] = useState([]);
     const messageValue = {messages, setMessages};
     const {enqueueSnackbar} = useSnackbar();

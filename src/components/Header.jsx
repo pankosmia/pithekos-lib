@@ -24,7 +24,7 @@ function Header({titleKey, widget, currentId}) {
            const doFetch = async () => {
                const fetched = await getJson("/list-clients", debugRef.current);
                if (fetched.ok) {
-                   setMenuItems(fetched.json.filter(i => !i.exclude_from_menu));
+                   setMenuItems(fetched.json.filter(i => {return !i.exclude_from_menu && (debugRef.current || !i.requires.debug)}));
                }
            };
            doFetch().then();
@@ -59,8 +59,8 @@ function Header({titleKey, widget, currentId}) {
                             }}
                         >{
                             menuItems.map(
-                                mi => mi.id === currentId ?
-                                    <MenuItem><i>{doI18n(`pages:${mi.id}:title`, i18n)}</i></MenuItem>:
+                                ((mi, n) => mi.id === currentId ?
+                                    <MenuItem key={n}><i>{doI18n(`pages:${mi.id}:title`, i18n)}</i></MenuItem>:
                                     <MenuItem
                                     onClick={()=>{window.location.href = mi.url}}
                                     disabled={mi.requires.net && !enabledRef.current}

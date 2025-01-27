@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from "react";
-import {getJson} from "../lib/getLib";
+import {getJson, getAndSetJson} from "../lib/getLib";
 import {enqueueSnackbar, SnackbarProvider} from "notistack";
 import {fetchEventSource} from "@microsoft/fetch-event-source";
 import AppWrapper from './AppWrapper';
@@ -17,6 +17,16 @@ function Spa({children}) {
         debugRef.current = nv;
         _setDebug(nv);
     };
+    const [systemBcv, _setSystemBcv] = useState({
+        bookCode: "JHN",
+        chapterNum: 3,
+        verseNum: 16
+    });
+    const bcvRef = useRef(systemBcv);
+    const setSystemBcv = nv => {
+        bcvRef.current = nv;
+        _setSystemBcv(nv);
+    };
     const [i18n, setI18n] = useState({});
 
     useEffect(
@@ -32,7 +42,25 @@ function Spa({children}) {
                     )
                 }
             }
-            doFetchI18n();
+            doFetchI18n().then();
+        },
+        []
+    );
+
+    useEffect(
+        () => {
+            const doFetchBcv = async () => {
+                const bcvResponse = await getJson("/navigation/bcv", debugRef.current);
+                if (bcvResponse.ok) {
+                    setSystemBcv(bcvResponse.json);
+                } else {
+                    enqueueSnackbar(
+                        `Could not load bcv: ${bcvResponse.error}`,
+                        {variant: "error"}
+                    )
+                }
+            }
+            doFetchBcv().then();
         },
         []
     );
@@ -42,6 +70,21 @@ function Spa({children}) {
             setEnableNet(true);
         } else if (ev.data === "disabled" && enabledRef.current) {
             setEnableNet(false);
+        }
+    }
+
+    const bcvHandler = ev => {
+        const bcvBits = ev.data.split('--');
+        if (bcvBits.length === 3) {
+            const newBcv = {
+                bookCode: bcvBits[0],
+                chapterNum: parseInt(bcvBits[1]),
+                verseNum: parseInt(bcvBits[2])
+            };
+            if ((newBcv.bookCode !== bcvRef.current.bookCode) || (newBcv.chapterNum !== bcvRef.current.chapterNum) || (newBcv.verseNum !== bcvRef.current.verseNum)) {
+                console.log(JSON.stringify(newBcv), JSON.stringify(bcvRef.current))
+                setSystemBcv(newBcv);
+            }
         }
     }
 
@@ -92,7 +135,9 @@ function Spa({children}) {
                         netHandler(event)
                     } else if (event.event === "debug") {
                         debugHandler(event)
-                    }
+                    } else if (event.event === "bcv") {
+                bcvHandler(event)
+            }
 
                 },
                 onclose() {
@@ -109,12 +154,14 @@ function Spa({children}) {
 
     const netValue = {enableNet, setEnableNet, enabledRef};
     const debugValue = {debug, setDebug, debugRef};
+    const bcvValue = {systemBcv, setSystemBcv, bcvRef};
 
     return <SnackbarProvider maxSnack={3}>
         <AppWrapper
             netValue={netValue}
             debugValue={debugValue}
             i18n={i18n}
+            bcvValue = {bcvValue}
         >
             {children}
         </AppWrapper>
