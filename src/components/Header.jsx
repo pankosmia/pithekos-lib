@@ -22,7 +22,7 @@ function Header({titleKey, widget, currentId}) {
     const hamburgerOpen = Boolean(hamburgerAnchorEl);
     const authOpen = Boolean(authAnchorEl);
     const [menuItems, setMenuItems] = useState([]);
-    
+
     useEffect(
         () => {
             const doFetch = async () => {
