@@ -16,7 +16,7 @@ function Header({titleKey, widget, currentId}) {
     const {enabledRef} = useContext(NetContext);
     const {debugRef} = useContext(DebugContext);
     const i18n = useContext(I18nContext);
-    const auth = useContext(AuthContext);
+    const {auth} = useContext(AuthContext);
     const [hamburgerAnchorEl, setHamburgerAnchorEl] = useState(null);
     const [authAnchorEl, setAuthAnchorEl] = useState(null);
     const hamburgerOpen = Boolean(hamburgerAnchorEl);
@@ -121,7 +121,7 @@ function Header({titleKey, widget, currentId}) {
                                     </Menu>
                                 </>
                                 :
-                                <CloudOff/>
+                                <CloudOff disabled={true}/>
                         }
                         {
                             enabledRef.current ?
@@ -134,7 +134,7 @@ function Header({titleKey, widget, currentId}) {
                                             }
                                         }
                                     }
-                                    sx={{color: "#33FF33"}}
+                                    sx={{color: "#33FF33", ml: 2}}
                                 /> :
                                 <PublicOff
                                     onClick={
@@ -145,7 +145,7 @@ function Header({titleKey, widget, currentId}) {
                                             }
                                         }
                                     }
-                                    sx={{color: "#AAAAAA"}}
+                                    sx={{color: "#AAAAAA", ml: 2}}
                                 />}
                         {
                             currentId.includes("settings") ?
