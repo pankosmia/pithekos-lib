@@ -107,9 +107,8 @@ function Spa({children}) {
         const [authName, authState] = ev.data.split('--');
         const authBool = authState === "true";
         if (authState) {
-            console.log(newAuth, authName, authState);
             if (!authName in newAuth || authBool !== newAuth[authName]) {
-                newAuth[authName] = authState;
+                newAuth[authName] = authBool;
                 setAuth(newAuth);
             }
         }
