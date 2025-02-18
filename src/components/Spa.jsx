@@ -104,10 +104,11 @@ function Spa({children}) {
     }
 
     const authHandler = ev => {
-        const newAuth = dcopy(auth);
+        const newAuth = dcopy(authRef.current);
         const [authName, authState] = ev.data.split('--');
         const authBool = authState === "true";
         if (authState) {
+            console.log(newAuth, authName, authState);
             if (!authName in newAuth || authBool !== newAuth[authName]) {
                 newAuth[authName] = authState;
                 setAuth(newAuth);

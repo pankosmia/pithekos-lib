@@ -16,7 +16,7 @@ function Header({titleKey, widget, currentId}) {
     const {enabledRef} = useContext(NetContext);
     const {debugRef} = useContext(DebugContext);
     const i18n = useContext(I18nContext);
-    const {auth} = useContext(AuthContext);
+    const {authRef} = useContext(AuthContext);
     const [hamburgerAnchorEl, setHamburgerAnchorEl] = useState(null);
     const [authAnchorEl, setAuthAnchorEl] = useState(null);
     const hamburgerOpen = Boolean(hamburgerAnchorEl);
@@ -108,7 +108,7 @@ function Header({titleKey, widget, currentId}) {
                                             horizontal: 'left',
                                         }}
                                     >{
-                                        Object.entries(auth)
+                                        Object.entries(authRef.current)
                                             .map(
                                                 (mi, n) => <MenuItem
                                                         key={n}
