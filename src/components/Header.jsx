@@ -3,10 +3,11 @@ import MessagesContext from "../contexts/messagesContext";
 import NetContext from "../contexts/netContext";
 import DebugContext from "../contexts/debugContext";
 import I18nContext from "../contexts/i18nContext";
+import AuthContext from "../contexts/authContext";
 import {AppBar, Grid2, Menu, MenuItem, Toolbar, Typography} from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import {doI18n} from "../lib/i18nLib";
-import {Public, PublicOff} from "@mui/icons-material";
+import {Public, PublicOff, Cloud, CloudOff} from "@mui/icons-material";
 import {getJson} from "../lib/getLib";
 import SettingsIcon from "@mui/icons-material/Settings";
 
@@ -15,8 +16,11 @@ function Header({titleKey, widget, currentId}) {
     const {enabledRef} = useContext(NetContext);
     const {debugRef} = useContext(DebugContext);
     const i18n = useContext(I18nContext);
-    const [anchorEl, setAnchorEl] = useState(null);
-    const open = Boolean(anchorEl);
+    const auth = useContext(AuthContext);
+    const [hamburgerAnchorEl, setHamburgerAnchorEl] = useState(null);
+    const [authAnchorEl, setAuthAnchorEl] = useState(null);
+    const hamburgerOpen = Boolean(hamburgerAnchorEl);
+    const authOpen = Boolean(authAnchorEl);
     const [menuItems, setMenuItems] = useState([]);
 
     useEffect(
@@ -45,14 +49,13 @@ function Header({titleKey, widget, currentId}) {
                        sx={{flexGrow: 1}}>
                     <Grid2 container size={{xs: 1}} justifyContent="flex-start">
                         <MenuIcon
-                            onClick={e => setAnchorEl(e.currentTarget)}
+                            onClick={e => setHamburgerAnchorEl(e.currentTarget)}
                         />
                         <Menu
                             id="app-menu"
-                            aria-labelledby="app-button"
-                            anchorEl={anchorEl}
-                            open={open}
-                            onClose={() => setAnchorEl(null)}
+                            anchorEl={hamburgerAnchorEl}
+                            open={hamburgerOpen}
+                            onClose={() => setHamburgerAnchorEl(null)}
                             anchorOrigin={{
                                 vertical: 'top',
                                 horizontal: 'left',
@@ -87,6 +90,39 @@ function Header({titleKey, widget, currentId}) {
                         {widget}
                     </Grid2>
                     <Grid2 container size={{xs: 3, md: 2}} justifyContent="flex-end">
+                        {
+                            enabledRef.current ?
+                                <>
+                                <Cloud onClick={e => setAuthAnchorEl(e.currentTarget)}/>
+                                    <Menu
+                                        id="auth-menu"
+                                        anchorEl={authAnchorEl}
+                                        open={authOpen}
+                                        onClose={() => setAuthAnchorEl(null)}
+                                        anchorOrigin={{
+                                            vertical: 'top',
+                                            horizontal: 'left',
+                                        }}
+                                        transformOrigin={{
+                                            vertical: 'top',
+                                            horizontal: 'left',
+                                        }}
+                                    >{
+                                        Object.entries(auth)
+                                            .map(
+                                                (mi, n) => <MenuItem
+                                                        key={n}
+                                                        onClick={() => {}}
+                                                    >{
+                                                        `${mi[0]} : ${mi[1] ? "✓" : "❌"}`
+                                                    }</MenuItem>
+                                            )
+                                    }
+                                    </Menu>
+                                </>
+                                :
+                                <CloudOff/>
+                        }
                         {
                             enabledRef.current ?
                                 <Public

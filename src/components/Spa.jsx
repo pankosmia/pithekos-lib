@@ -3,6 +3,7 @@ import {getJson, getAndSetJson} from "../lib/getLib";
 import {enqueueSnackbar, SnackbarProvider} from "notistack";
 import {fetchEventSource} from "@microsoft/fetch-event-source";
 import AppWrapper from './AppWrapper';
+import dcopy from 'deep-copy';
 
 function Spa({children}) {
     const [enableNet, _setEnableNet] = useState(false);
@@ -16,6 +17,12 @@ function Spa({children}) {
     const setDebug = nv => {
         debugRef.current = nv;
         _setDebug(nv);
+    };
+    const [auth, _setAuth] = useState({});
+    const authRef = useRef(auth);
+    const setAuth = nv => {
+        authRef.current = nv;
+        _setAuth(nv);
     };
     const [systemBcv, _setSystemBcv] = useState({
         bookCode: "JHN",
@@ -96,6 +103,18 @@ function Spa({children}) {
         }
     }
 
+    const authHandler = ev => {
+        const newAuth = dcopy(auth);
+        const [authName, authState] = ev.data.split('--');
+        const authBool = authState === "true";
+        if (authState) {
+            if (!authName in newAuth || authBool !== newAuth[authName]) {
+                newAuth[authName] = authState;
+                setAuth(newAuth);
+            }
+        }
+    }
+
     const miscHandler = ev => {
         const dataBits = ev.data.split('--');
         if (dataBits.length === 4) {
@@ -136,8 +155,10 @@ function Spa({children}) {
                     } else if (event.event === "debug") {
                         debugHandler(event)
                     } else if (event.event === "bcv") {
-                bcvHandler(event)
-            }
+                        bcvHandler(event)
+                    } else if (event.event === "auth") {
+                        authHandler(event)
+                    }
 
                 },
                 onclose() {
@@ -155,6 +176,7 @@ function Spa({children}) {
     const netValue = {enableNet, setEnableNet, enabledRef};
     const debugValue = {debug, setDebug, debugRef};
     const bcvValue = {systemBcv, setSystemBcv, bcvRef};
+    const authValue = {auth, setAuth, authRef};
 
     return <SnackbarProvider maxSnack={3}>
         <AppWrapper
@@ -162,6 +184,7 @@ function Spa({children}) {
             debugValue={debugValue}
             i18n={i18n}
             bcvValue = {bcvValue}
+            authValue = {authValue}
         >
             {children}
         </AppWrapper>
