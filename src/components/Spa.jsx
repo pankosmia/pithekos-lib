@@ -89,7 +89,6 @@ function Spa({children}) {
                 verseNum: parseInt(bcvBits[2])
             };
             if ((newBcv.bookCode !== bcvRef.current.bookCode) || (newBcv.chapterNum !== bcvRef.current.chapterNum) || (newBcv.verseNum !== bcvRef.current.verseNum)) {
-                console.log(JSON.stringify(newBcv), JSON.stringify(bcvRef.current))
                 setSystemBcv(newBcv);
             }
         }
