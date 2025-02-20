@@ -103,15 +103,18 @@ function Spa({children}) {
     }
 
     const authHandler = ev => {
+        try {
         const newAuth = dcopy(authRef.current);
         const [authName, authEndpoint, authState] = ev.data.split('--');
-        if (authState) {
+        if (typeof authState === "boolean") {
             const authBool = (authState === "true");
-            if (!authName in newAuth || authBool !== newAuth[authName].isActive) {
+            if (!(authName in newAuth) || !("isActive" in newAuth[authName]) || authBool !== newAuth[authName].isActive) {
                 newAuth[authName] = {endpoint: authEndpoint, isActive: authBool};
                 setAuth(newAuth);
             }
         }
+    } catch (err) {
+        console.log(`Auth Error: ${err}, data: ${ev.data}`)}
     }
 
     const miscHandler = ev => {
