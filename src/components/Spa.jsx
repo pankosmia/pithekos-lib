@@ -106,7 +106,7 @@ function Spa({children}) {
         try {
         const newAuth = dcopy(authRef.current);
         const [authName, authEndpoint, authState] = ev.data.split('--');
-        if (typeof authState === "boolean") {
+        if (["true", "false"].includes(authState)) {
             const authBool = (authState === "true");
             if (!(authName in newAuth) || !("isActive" in newAuth[authName]) || authBool !== newAuth[authName].isActive) {
                 newAuth[authName] = {endpoint: authEndpoint, isActive: authBool};
