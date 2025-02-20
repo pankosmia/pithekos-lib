@@ -39,7 +39,7 @@ function Header({titleKey, widget, currentId}) {
         },
         [debugRef.current]
     )
-
+    console.log("auth", authRef.current);
     return <div sx={{flexGrow: 1}}>
         <AppBar position="static">
             <Toolbar sx={{backgroundColor: "#441650"}}>
