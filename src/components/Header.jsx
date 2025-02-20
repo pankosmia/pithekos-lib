@@ -112,16 +112,18 @@ function Header({titleKey, widget, currentId}) {
                                             .map(
                                                 (mi, n) => <MenuItem
                                                         key={n}
-                                                        onClick={() => {}}
+                                                        onClick={() => {
+                                                            window.location.href = `${mi[1].endpoint}/${mi[1].isActive ? "logout" : "auth"}`;
+                                                        }}
                                                     >{
-                                                        `${mi[0]} : ${mi[1] ? "✓" : "❌"}`
+                                                        `${mi[0]} ${mi[1].isActive ? "✓" : "❌"}`
                                                     }</MenuItem>
                                             )
                                     }
                                     </Menu>
                                 </>
                                 :
-                                <CloudOff disabled={true}/>
+                                <CloudOff disabled={true} sx={{color: "#AAAAAA"}}/>
                         }
                         {
                             enabledRef.current ?

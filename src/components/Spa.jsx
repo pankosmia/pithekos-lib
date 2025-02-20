@@ -104,11 +104,11 @@ function Spa({children}) {
 
     const authHandler = ev => {
         const newAuth = dcopy(authRef.current);
-        const [authName, authState] = ev.data.split('--');
-        const authBool = authState === "true";
+        const [authName, authEndpoint, authState] = ev.data.split('--');
         if (authState) {
-            if (!authName in newAuth || authBool !== newAuth[authName]) {
-                newAuth[authName] = authBool;
+            const authBool = (authState === "true");
+            if (!authName in newAuth || authBool !== newAuth[authName].isActive) {
+                newAuth[authName] = {endpoint: authEndpoint, isActive: authBool};
                 setAuth(newAuth);
             }
         }
