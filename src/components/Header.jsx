@@ -39,7 +39,6 @@ function Header({titleKey, widget, currentId}) {
         },
         [debugRef.current]
     )
-    console.log("auth", authRef.current);
     return <div sx={{flexGrow: 1}}>
         <AppBar position="static">
             <Toolbar sx={{backgroundColor: "#441650"}}>
@@ -113,7 +112,7 @@ function Header({titleKey, widget, currentId}) {
                                                 (mi, n) => <MenuItem
                                                         key={n}
                                                         onClick={() => {
-                                                            window.location.href = `${mi[1].endpoint}/${mi[1].isActive ? "logout" : "auth"}`;
+                                                            window.location.href = mi[1].isActive ? `${mi[1].endpoint}/logout` : `/gitea/login/${mi[0]}/`;
                                                         }}
                                                     >{
                                                         `${mi[0]} ${mi[1].isActive ? "✓" : "❌"}`
