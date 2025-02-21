@@ -112,7 +112,7 @@ function Header({titleKey, widget, currentId}) {
                                                 (mi, n) => <MenuItem
                                                         key={n}
                                                         onClick={() => {
-                                                            window.location.href = mi[1].isActive ? `${mi[1].endpoint}/logout` : `/gitea/login/${mi[0]}/`;
+                                                            window.location.href = mi[1].isActive ? `/gitea/logout/${mi[0]}/` : `/gitea/login/${mi[0]}/`;
                                                         }}
                                                     >{
                                                         `${mi[0]} ${mi[1].isActive ? "✓" : "❌"}`
