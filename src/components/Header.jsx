@@ -39,6 +39,7 @@ function Header({titleKey, widget, currentId}) {
         },
         [debugRef.current]
     )
+    const currentUrl = menuItems.length > 0 ? menuItems.filter(i => i.id === currentId)[0].url: "";
     return <div sx={{flexGrow: 1}}>
         <AppBar position="static">
             <Toolbar sx={{backgroundColor: "#441650"}}>
@@ -112,7 +113,7 @@ function Header({titleKey, widget, currentId}) {
                                                 (mi, n) => <MenuItem
                                                         key={n}
                                                         onClick={() => {
-                                                            window.location.href = mi[1].isActive ? `/gitea/logout/${mi[0]}/` : `/gitea/login/${mi[0]}/`;
+                                                            window.location.href = mi[1].isActive ? `/gitea/logout/${mi[0]}/` : `/gitea/login/${mi[0]}/${currentUrl}`;
                                                         }}
                                                     >{
                                                         `${mi[0]} ${mi[1].isActive ? "✓" : "❌"}`
