@@ -15,7 +15,7 @@ function Header({titleKey, widget, currentId}) {
     const {messages, setMessages} = useContext(MessagesContext);
     const {enabledRef} = useContext(NetContext);
     const {debugRef} = useContext(DebugContext);
-    const i18n = useContext(I18nContext);
+    const {i18nRef} = useContext(I18nContext);
     const {authRef} = useContext(AuthContext);
     const [hamburgerAnchorEl, setHamburgerAnchorEl] = useState(null);
     const [authAnchorEl, setAuthAnchorEl] = useState(null);
@@ -68,7 +68,7 @@ function Header({titleKey, widget, currentId}) {
                             menuItems
                                 .map(
                                     (mi, n) => mi.id === currentId ?
-                                        <MenuItem key={n}><i>{doI18n(`pages:${mi.id}:title`, i18n)}</i></MenuItem> :
+                                        <MenuItem key={n}><i>{doI18n(`pages:${mi.id}:title`, i18nRef.current)}</i></MenuItem> :
                                         <MenuItem
                                             key={n}
                                             onClick={() => {
@@ -76,7 +76,7 @@ function Header({titleKey, widget, currentId}) {
                                             }}
                                             disabled={mi.requires.net && !enabledRef.current}
                                         >{
-                                            doI18n(`pages:${mi.id}:title`, i18n)
+                                            doI18n(`pages:${mi.id}:title`, i18nRef.current)
                                         }</MenuItem>
                                 )
                         }
@@ -84,7 +84,7 @@ function Header({titleKey, widget, currentId}) {
                     </Grid2>
                     <Grid2 container size={{xs: 5, md: 4, lg: 3}} justifyContent="flex-start">
                         {titleKey && titleKey.length > 0 &&
-                            <Typography variant="h6">{doI18n(titleKey, i18n)}</Typography>}
+                            <Typography variant="h6">{doI18n(titleKey, i18nRef.current)}</Typography>}
                     </Grid2>
                     <Grid2 container size={{xs: 3, md: 4, lg: 6}} justifyContent="flex-start">
                         {widget}

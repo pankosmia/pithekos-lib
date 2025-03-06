@@ -39,7 +39,7 @@ function AppWrapper({children, netValue, debugValue, bcvValue, i18nValue, authVa
         <NetContext.Provider value={netValue}>
             <BcvContext.Provider value={bcvValue}>
                 <MessagesContext.Provider value={messageValue}>
-                    <I18nContext.Provider value={i18nValue.i18nRef.current}>
+                    <I18nContext.Provider value={i18nValue}>
                         <AuthContext.Provider value={authValue}>
                             <Box sx={{height: '100vh', overflow: 'hidden'}}>
                                 {children}

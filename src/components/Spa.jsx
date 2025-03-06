@@ -45,6 +45,7 @@ function Spa({children}) {
     useEffect(
         () => {
             const doFetchI18n = async () => {
+                console.log(doFetchI18n);
                 const i18nResponse = await getJson("/i18n/flat", debugRef.current);
                 if (i18nResponse.ok) {
                     setI18n(i18nResponse.json);
@@ -125,6 +126,7 @@ function Spa({children}) {
 
     const miscHandler = ev => {
         const dataBits = ev.data.split('--');
+        console.log(dataBits);
         if (dataBits.length === 4) {
             if (dataBits[2] === "uilang") {
                 setLangCount(langCount + 1);
