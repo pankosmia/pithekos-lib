@@ -121,20 +121,17 @@ function Spa({children}) {
     const miscHandler = ev => {
         const dataBits = ev.data.split('--');
         if (dataBits.length === 4) {
-            enqueueSnackbar(
-                `${dataBits[2]} => ${dataBits[3]}`,
-                {
-                    variant: dataBits[0],
-                    anchorOrigin: {vertical: "bottom", horizontal: "right"}
-                }
-            );
-        }
-    }
-
-    const langHandler = ev => {
-        const dataBits = ev.data.split('--');
-        if (dataBits.length === 4) {
-            setLangCount(langCount + 1);
+            if (dataBits[2] === "uilang") {
+                setLangCount(langCount + 1);
+            } else {
+                enqueueSnackbar(
+                    `${dataBits[2]} => ${dataBits[3]}`,
+                    {
+                        variant: dataBits[0],
+                        anchorOrigin: {vertical: "bottom", horizontal: "right"}
+                    }
+                );
+            }
         }
     }
 
@@ -168,8 +165,6 @@ function Spa({children}) {
                         bcvHandler(event)
                     } else if (event.event === "auth") {
                         authHandler(event)
-                    } else if (event.event === "uilang") {
-                        langHandler(event)
                     }
 
                 },
