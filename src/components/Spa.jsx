@@ -35,6 +35,7 @@ function Spa({children}) {
         _setSystemBcv(nv);
     };
     const [i18n, setI18n] = useState({});
+    const [langCount, setLangCount] = useState(0);
 
     useEffect(
         () => {
@@ -51,7 +52,7 @@ function Spa({children}) {
             }
             doFetchI18n().then();
         },
-        []
+        [langCount]
     );
 
     useEffect(
@@ -130,6 +131,13 @@ function Spa({children}) {
         }
     }
 
+    const langHandler = ev => {
+        const dataBits = ev.data.split('--');
+        if (dataBits.length === 4) {
+            setLangCount(langCount + 1);
+        }
+    }
+
     useEffect(() => {
         const controller = new AbortController();
         const fetchSSE = async () => {
@@ -160,6 +168,8 @@ function Spa({children}) {
                         bcvHandler(event)
                     } else if (event.event === "auth") {
                         authHandler(event)
+                    } else if (event.event === "uilang") {
+                        langHandler(event)
                     }
 
                 },
