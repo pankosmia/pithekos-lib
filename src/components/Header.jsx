@@ -39,7 +39,7 @@ function Header({titleKey, widget, currentId}) {
         },
         [debugRef.current]
     )
-    const currentUrl = menuItems.length > 0 ? menuItems.filter(i => i.id === currentId)[0].url: "";
+    const currentUrl = menuItems.filter(i => i.id === currentId).length === 1 ? menuItems.filter(i => i.id === currentId)[0].url: "";
     return <div sx={{flexGrow: 1}}>
         <AppBar position="static">
             <Toolbar sx={{backgroundColor: "#441650"}}>
