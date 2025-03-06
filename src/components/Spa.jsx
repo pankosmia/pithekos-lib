@@ -40,25 +40,24 @@ function Spa({children}) {
         i18nRef.current = nv;
         _setI18n(nv);
     };
-    const [langCount, setLangCount] = useState(0);
+
+    const doFetchI18n = async () => {
+        const i18nResponse = await getJson("/i18n/flat", debugRef.current);
+        if (i18nResponse.ok) {
+            setI18n(i18nResponse.json);
+        } else {
+            enqueueSnackbar(
+                `Could not load i18n: ${i18nResponse.error}`,
+                {variant: "error"}
+            )
+        }
+    }
 
     useEffect(
         () => {
-            const doFetchI18n = async () => {
-                console.log("doFetchI18n");
-                const i18nResponse = await getJson("/i18n/flat", debugRef.current);
-                if (i18nResponse.ok) {
-                    setI18n(i18nResponse.json);
-                } else {
-                    enqueueSnackbar(
-                        `Could not load i18n: ${i18nResponse.error}`,
-                        {variant: "error"}
-                    )
-                }
-            }
             doFetchI18n().then();
         },
-        [langCount]
+        []
     );
 
     useEffect(
@@ -126,11 +125,9 @@ function Spa({children}) {
 
     const miscHandler = ev => {
         const dataBits = ev.data.split('--');
-        console.log("dataBits", dataBits);
         if (dataBits.length === 4) {
             if (dataBits[2] === "uilang") {
-                console.log(`Setting langCount, previously ${langCount}`);
-                setLangCount(langCount + 1);
+                doFetchI18n().then();
             } else {
                 enqueueSnackbar(
                     `${dataBits[2]} => ${dataBits[3]}`,
