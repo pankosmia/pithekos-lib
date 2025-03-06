@@ -8,7 +8,7 @@ import I18nContext from "../contexts/i18nContext";
 import AuthContext from "../contexts/authContext";
 import {Box} from "@mui/material";
 
-function AppWrapper({children, netValue, debugValue, bcvValue, i18n, authValue}) {
+function AppWrapper({children, netValue, debugValue, bcvValue, i18nValue, authValue}) {
 
     const [messages, setMessages] = useState([]);
     const messageValue = {messages, setMessages};
@@ -39,7 +39,7 @@ function AppWrapper({children, netValue, debugValue, bcvValue, i18n, authValue})
         <NetContext.Provider value={netValue}>
             <BcvContext.Provider value={bcvValue}>
                 <MessagesContext.Provider value={messageValue}>
-                    <I18nContext.Provider value={i18n}>
+                    <I18nContext.Provider value={i18nValue.i18nRef.current}>
                         <AuthContext.Provider value={authValue}>
                             <Box sx={{height: '100vh', overflow: 'hidden'}}>
                                 {children}

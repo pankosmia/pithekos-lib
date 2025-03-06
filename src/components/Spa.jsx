@@ -34,7 +34,12 @@ function Spa({children}) {
         bcvRef.current = nv;
         _setSystemBcv(nv);
     };
-    const [i18n, setI18n] = useState({});
+    const [i18n, _setI18n] = useState({});
+    const i18nRef = useRef(i18n);
+    const setI18n = nv => {
+        i18nRef.current = nv;
+        _setI18n(nv);
+    };
     const [langCount, setLangCount] = useState(0);
 
     useEffect(
@@ -184,12 +189,13 @@ function Spa({children}) {
     const debugValue = {debug, setDebug, debugRef};
     const bcvValue = {systemBcv, setSystemBcv, bcvRef};
     const authValue = {auth, setAuth, authRef};
+    const i18nValue = {i18n, setI18n, i18nRef};
 
     return <SnackbarProvider maxSnack={3}>
         <AppWrapper
             netValue={netValue}
             debugValue={debugValue}
-            i18n={i18n}
+            i18nValue={i18nValue}
             bcvValue = {bcvValue}
             authValue = {authValue}
         >
