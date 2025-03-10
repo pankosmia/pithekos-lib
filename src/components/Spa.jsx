@@ -110,6 +110,10 @@ function Spa({children}) {
         }
     }
 
+    const languagesHandler = ev => {
+        doFetchI18n().then()
+    }
+
     const authHandler = ev => {
         try {
             const newAuth = dcopy(authRef.current);
@@ -129,18 +133,13 @@ function Spa({children}) {
     const miscHandler = ev => {
         const dataBits = ev.data.split('--');
         if (dataBits.length === 4) {
-            if (dataBits[2] === "uilang") {
-                console.log("uilang");
-                doFetchI18n().then();
-            } else {
-                enqueueSnackbar(
-                    `${dataBits[2]} => ${dataBits[3]}`,
-                    {
-                        variant: dataBits[0],
-                        anchorOrigin: {vertical: "bottom", horizontal: "right"}
-                    }
-                );
-            }
+            enqueueSnackbar(
+                `${dataBits[2]} => ${dataBits[3]}`,
+                {
+                    variant: dataBits[0],
+                    anchorOrigin: {vertical: "bottom", horizontal: "right"}
+                }
+            );
         }
     }
 
