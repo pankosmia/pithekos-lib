@@ -43,6 +43,7 @@ function Spa({children}) {
     const [languages, setLanguages] = useState("en");
 
     const doFetchI18n = async () => {
+        console.log("doFetchI18n")
         const i18nResponse = await getJson("/i18n/flat", debugRef.current);
         if (i18nResponse.ok) {
             setI18n(i18nResponse.json);
@@ -110,7 +111,9 @@ function Spa({children}) {
     }
 
     const languagesHandler = ev => {
+        console.log("languagesHandler");
         if (ev.data !== languages) {
+            console.log("languagesHandler change");
             setLanguages(ev.data);
         }
     }
