@@ -41,8 +41,6 @@ function Spa({children}) {
         i18nRef.current = nv;
         _setI18n(nv);
     };
-    const [languages, setLanguages] = useState("en");
-    const languagesRef = useRef(languages);
 
     const doFetchI18n = async () => {
         console.log("doFetchI18n")
@@ -61,7 +59,7 @@ function Spa({children}) {
         () => {
             doFetchI18n().then();
         },
-        [languages]
+        []
     );
 
     useEffect(
@@ -112,14 +110,6 @@ function Spa({children}) {
         }
     }
 
-    const languagesHandler = ev => {
-        console.log("languagesHandler");
-        if (ev.data !== languagesRef.current) {
-            console.log("languagesHandler change", ev.data, languagesRef.current);
-            setLanguages(ev.data);
-        }
-    }
-
     const authHandler = ev => {
         try {
             const newAuth = dcopy(authRef.current);
@@ -139,13 +129,18 @@ function Spa({children}) {
     const miscHandler = ev => {
         const dataBits = ev.data.split('--');
         if (dataBits.length === 4) {
-            enqueueSnackbar(
-                `${dataBits[2]} => ${dataBits[3]}`,
-                {
-                    variant: dataBits[0],
-                    anchorOrigin: {vertical: "bottom", horizontal: "right"}
-                }
-            );
+            if (dataBits[2] === "uilang") {
+                console.log("uilang");
+                doFetchI18n().then();
+            } else {
+                enqueueSnackbar(
+                    `${dataBits[2]} => ${dataBits[3]}`,
+                    {
+                        variant: dataBits[0],
+                        anchorOrigin: {vertical: "bottom", horizontal: "right"}
+                    }
+                );
+            }
         }
     }
 
