@@ -6,6 +6,7 @@ import AppWrapper from './AppWrapper';
 import dcopy from 'deep-copy';
 
 function Spa({children}) {
+    console.log("Rerender Spa")
     const [enableNet, _setEnableNet] = useState(false);
     const enabledRef = useRef(enableNet);
     const setEnableNet = nv => {
