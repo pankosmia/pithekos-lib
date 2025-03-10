@@ -40,6 +40,7 @@ function Spa({children}) {
         i18nRef.current = nv;
         _setI18n(nv);
     };
+    const [languages, setLanguages] = useState("en");
 
     const doFetchI18n = async () => {
         const i18nResponse = await getJson("/i18n/flat", debugRef.current);
@@ -57,7 +58,7 @@ function Spa({children}) {
         () => {
             doFetchI18n().then();
         },
-        []
+        [languages]
     );
 
     useEffect(
@@ -108,35 +109,38 @@ function Spa({children}) {
         }
     }
 
+    const languagesHandler = ev => {
+        if (ev.data !== languages) {
+            setLanguages(ev.data);
+        }
+    }
+
     const authHandler = ev => {
         try {
-        const newAuth = dcopy(authRef.current);
-        const [authName, authEndpoint, authState] = ev.data.split('--');
-        if (["true", "false"].includes(authState)) {
-            const authBool = (authState === "true");
-            if (!(authName in newAuth) || !("isActive" in newAuth[authName]) || authBool !== newAuth[authName].isActive) {
-                newAuth[authName] = {endpoint: authEndpoint, isActive: authBool};
-                setAuth(newAuth);
+            const newAuth = dcopy(authRef.current);
+            const [authName, authEndpoint, authState] = ev.data.split('--');
+            if (["true", "false"].includes(authState)) {
+                const authBool = (authState === "true");
+                if (!(authName in newAuth) || !("isActive" in newAuth[authName]) || authBool !== newAuth[authName].isActive) {
+                    newAuth[authName] = {endpoint: authEndpoint, isActive: authBool};
+                    setAuth(newAuth);
+                }
             }
+        } catch (err) {
+            console.log(`Auth Error: ${err}, data: ${ev.data}`)
         }
-    } catch (err) {
-        console.log(`Auth Error: ${err}, data: ${ev.data}`)}
     }
 
     const miscHandler = ev => {
         const dataBits = ev.data.split('--');
         if (dataBits.length === 4) {
-            if (dataBits[2] === "uilang") {
-                doFetchI18n().then();
-            } else {
-                enqueueSnackbar(
-                    `${dataBits[2]} => ${dataBits[3]}`,
-                    {
-                        variant: dataBits[0],
-                        anchorOrigin: {vertical: "bottom", horizontal: "right"}
-                    }
-                );
-            }
+            enqueueSnackbar(
+                `${dataBits[2]} => ${dataBits[3]}`,
+                {
+                    variant: dataBits[0],
+                    anchorOrigin: {vertical: "bottom", horizontal: "right"}
+                }
+            );
         }
     }
 
@@ -170,6 +174,8 @@ function Spa({children}) {
                         bcvHandler(event)
                     } else if (event.event === "auth") {
                         authHandler(event)
+                    } else if (event.event === "languages") {
+                        languagesHandler(event)
                     }
 
                 },
@@ -196,8 +202,8 @@ function Spa({children}) {
             netValue={netValue}
             debugValue={debugValue}
             i18nValue={i18nValue}
-            bcvValue = {bcvValue}
-            authValue = {authValue}
+            bcvValue={bcvValue}
+            authValue={authValue}
         >
             {children}
         </AppWrapper>
