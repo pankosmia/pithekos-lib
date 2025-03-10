@@ -61,7 +61,7 @@ function Spa({children}) {
         () => {
             doFetchI18n().then();
         },
-        []
+        [languages]
     );
 
     useEffect(
@@ -117,7 +117,6 @@ function Spa({children}) {
         if (ev.data !== languagesRef.current) {
             console.log("languagesHandler change", ev.data, languagesRef.current);
             setLanguages(ev.data);
-            doFetchI18n().then();
         }
     }
 
