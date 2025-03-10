@@ -113,7 +113,7 @@ function Spa({children}) {
     const languagesHandler = ev => {
         console.log("languagesHandler");
         if (ev.data !== languages) {
-            console.log("languagesHandler change");
+            console.log("languagesHandler change", ev.data, languages);
             setLanguages(ev.data);
         }
     }
