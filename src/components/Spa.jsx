@@ -42,6 +42,7 @@ function Spa({children}) {
         _setI18n(nv);
     };
     const [languages, setLanguages] = useState("en");
+    const languagesRef = useRef(languages);
 
     const doFetchI18n = async () => {
         console.log("doFetchI18n")
@@ -113,8 +114,8 @@ function Spa({children}) {
 
     const languagesHandler = ev => {
         console.log("languagesHandler");
-        if (ev.data !== languages) {
-            console.log("languagesHandler change", ev.data, languages);
+        if (ev.data !== languagesRef.current) {
+            console.log("languagesHandler change", ev.data, languagesRef.current);
             setLanguages(ev.data);
             doFetchI18n().then();
         }
