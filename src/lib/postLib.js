@@ -36,9 +36,14 @@ async function postEmptyJson(url, debug=false) {
     }
 }
 
-async function postJson(url, body, debug=false) {
+async function postJson(url, body, debug=false, contentType = "application/json") {
     try {
-        const response = await fetch(url, {method: "POST", body});
+        const response = await fetch(
+            url,
+            {
+                method: "POST",
+                headers: {"Content-Type": contentType},
+                body});
         if (!response.ok) {
             const result = {
                 url,
