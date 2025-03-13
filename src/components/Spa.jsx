@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from "react";
-import {getJson, getAndSetJson} from "../lib/getLib";
+import {getJson} from "../lib/getLib";
 import {enqueueSnackbar, SnackbarProvider} from "notistack";
 import {fetchEventSource} from "@microsoft/fetch-event-source";
 import AppWrapper from './AppWrapper';
@@ -41,6 +41,16 @@ function Spa({children}) {
         i18nRef.current = nv;
         _setI18n(nv);
     };
+    const [typography, _setTypography] = useState({
+        font_set: "Pankosmia-CardoPankosmia-EzraSILPankosmia-PadaukPankosmia-AwamiNastaliqPankosmia-NotoNastaliqUrduPankosmia-GentiumPlus",
+        size: "medium",
+        direction: "ltr"
+    });
+    const typographyRef = useRef(typography);
+    const setTypography = nv => {
+        typography.current = nv;
+        _setTypography(nv);
+    };
 
     const doFetchI18n = async () => {
         console.log("doFetchI18n")
@@ -80,11 +90,17 @@ function Spa({children}) {
         []
     );
 
-    const netHandler = ev => {
-        if (ev.data === "enabled" && !enabledRef.current) {
-            setEnableNet(true);
-        } else if (ev.data === "disabled" && enabledRef.current) {
-            setEnableNet(false);
+    const statusHandler = ev => {
+        const statusBits = ev.data.split('--');
+        if (statusBits.length === 4) {
+            const netStatus = (statusBits[1] === "enabled");
+            if (netStatus !== enabledRef.current) {
+                setEnableNet(netStatus);
+            }
+            const debugStatus = (statusBits[3] === "enabled");
+            if (debugStatus !== debugRef.current) {
+                setDebug(netStatus);
+            }
         }
     }
 
@@ -102,15 +118,21 @@ function Spa({children}) {
         }
     }
 
-    const debugHandler = ev => {
-        if (ev.data === "enabled" && !debugRef.current) {
-            setDebug(true);
-        } else if (ev.data === "disabled" && debugRef.current) {
-            setDebug(false);
+    const typographyHandler = ev => {
+        const typographyBits = ev.data.split('--');
+        if (typographyBits.length === 3) {
+            const newTypography = {
+                font_set: typographyBits[0],
+                size: typographyBits[1],
+                direction: typographyBits[2]
+            };
+            if ((newTypography.font_set !== typographyRef.current.font_set) || (newTypography.size !== typography.current.size) || (newTypography.direction !== typographyRef.current.direction)) {
+                setTypography(newTypography);
+            }
         }
     }
 
-    const languagesHandler = ev => {
+    const languagesHandler = () => {
         doFetchI18n().then()
     }
 
@@ -165,16 +187,16 @@ function Spa({children}) {
                 onmessage(event) {
                     if (event.event === "misc") {
                         miscHandler(event)
-                    } else if (event.event === "net_status") {
-                        netHandler(event)
-                    } else if (event.event === "debug") {
-                        debugHandler(event)
+                    } else if (event.event === "status") {
+                        statusHandler(event)
                     } else if (event.event === "bcv") {
                         bcvHandler(event)
                     } else if (event.event === "auth") {
                         authHandler(event)
                     } else if (event.event === "languages") {
                         languagesHandler(event)
+                    } else if (event.event === "typography") {
+                        typographyHandler(event)
                     }
 
                 },
@@ -195,6 +217,7 @@ function Spa({children}) {
     const bcvValue = {systemBcv, setSystemBcv, bcvRef};
     const authValue = {auth, setAuth, authRef};
     const i18nValue = {i18n, setI18n, i18nRef};
+    const typographyValue = {typography, setTypography, typographyRef};
 
     return <SnackbarProvider maxSnack={3}>
         <AppWrapper
@@ -203,6 +226,7 @@ function Spa({children}) {
             i18nValue={i18nValue}
             bcvValue={bcvValue}
             authValue={authValue}
+            typographyValue={typographyValue}
         >
             {children}
         </AppWrapper>

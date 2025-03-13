@@ -6,9 +6,10 @@ import BcvContext from "../contexts/bcvContext";
 import MessagesContext from "../contexts/messagesContext";
 import I18nContext from "../contexts/i18nContext";
 import AuthContext from "../contexts/authContext";
+import TypographyContext from "../contexts/typographyContext";
 import {Box} from "@mui/material";
 
-function AppWrapper({children, netValue, debugValue, bcvValue, i18nValue, authValue}) {
+function AppWrapper({children, netValue, debugValue, bcvValue, i18nValue, authValue, typographyValue}) {
 
     const [messages, setMessages] = useState([]);
     const messageValue = {messages, setMessages};
@@ -35,21 +36,23 @@ function AppWrapper({children, netValue, debugValue, bcvValue, i18nValue, authVa
         [messages]
     )
 
-    return <DebugContext.Provider value={debugValue}>
-        <NetContext.Provider value={netValue}>
-            <BcvContext.Provider value={bcvValue}>
-                <MessagesContext.Provider value={messageValue}>
-                    <I18nContext.Provider value={i18nValue}>
-                        <AuthContext.Provider value={authValue}>
-                            <Box sx={{height: '100vh', overflow: 'hidden'}}>
-                                {children}
-                            </Box>
-                        </AuthContext.Provider>
-                    </I18nContext.Provider>
-                </MessagesContext.Provider>
-            </BcvContext.Provider>
-        </NetContext.Provider>
-    </DebugContext.Provider>
+    return <I18nContext.Provider value={i18nValue}>
+        <TypographyContext.Provider value={typographyValue}>
+            <AuthContext.Provider value={authValue}>
+                <BcvContext.Provider value={bcvValue}>
+                    <MessagesContext.Provider value={messageValue}>
+                        <DebugContext.Provider value={debugValue}>
+                            <NetContext.Provider value={netValue}>
+                                <Box sx={{height: '100vh', overflow: 'hidden'}}>
+                                    {children}
+                                </Box>
+                            </NetContext.Provider>
+                        </DebugContext.Provider>
+                    </MessagesContext.Provider>
+                </BcvContext.Provider>
+            </AuthContext.Provider>
+        </TypographyContext.Provider>
+    </I18nContext.Provider>
 }
 
 export default AppWrapper;
