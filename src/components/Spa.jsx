@@ -119,14 +119,18 @@ function Spa({children}) {
     }
 
     const typographyHandler = ev => {
+        console.log("In Typography Handler");
         const typographyBits = ev.data.split('--');
         if (typographyBits.length === 3) {
+            console.log("Typography data has 3 items");
             const newTypography = {
                 font_set: typographyBits[0],
                 size: typographyBits[1],
                 direction: typographyBits[2]
             };
-            if ((newTypography.font_set !== typographyRef.current.font_set) || (newTypography.size !== typography.current.size) || (newTypography.direction !== typographyRef.current.direction)) {
+            console.log("typographyRef", typographyRef.current, "new", newTypography);
+            if ((newTypography.font_set !== typographyRef.current.font_set) || (newTypography.size !== typographyRef.current.size) || (newTypography.direction !== typographyRef.current.direction)) {
+                console.log("setTypography");
                 setTypography(newTypography);
             }
         }
