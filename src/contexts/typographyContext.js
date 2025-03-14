@@ -1,5 +1,5 @@
 import {createContext} from 'react';
 
-const TypographyContext = createContext({systemTypography: false, setSystemTypography: ()=>{}});
+const TypographyContext = createContext({typography: false, setTypography: ()=>{}});
 
 export default TypographyContext;
