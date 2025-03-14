@@ -65,9 +65,23 @@ function Spa({children}) {
         }
     }
 
+    const doFetchTypography = async () => {
+        console.log("doFetchTypography")
+        const typoResponse = await getJson("/settings/typography", debugRef.current);
+        if (typoResponse.ok) {
+            setI18n(typoResponse.json);
+        } else {
+            enqueueSnackbar(
+                `Could not load typography: ${typoResponse.error}`,
+                {variant: "error"}
+            )
+        }
+    }
+
     useEffect(
         () => {
             doFetchI18n().then();
+            doFetchTypography().then();
         },
         []
     );
@@ -99,7 +113,7 @@ function Spa({children}) {
             }
             const debugStatus = (statusBits[3] === "enabled");
             if (debugStatus !== debugRef.current) {
-                setDebug(netStatus);
+                setDebug(debugStatus);
             }
         }
     }
