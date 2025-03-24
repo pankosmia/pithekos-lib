@@ -89,7 +89,12 @@ function Spa({children}) {
             const doFetchBcv = async () => {
                 const bcvResponse = await getJson("/navigation/bcv", debugRef.current);
                 if (bcvResponse.ok) {
-                    setSystemBcv(bcvResponse.json);
+                    const serverOb = bcvResponse.json;
+                    setSystemBcv({
+                        bookCode: serverOb.book_code,
+                        chapterNum: serverOb.chapter,
+                        verseNum: serverOb.verse
+                    });
                 } else {
                     enqueueSnackbar(
                         `Could not load bcv: ${bcvResponse.error}`,
