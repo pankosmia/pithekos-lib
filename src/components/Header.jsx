@@ -4,7 +4,19 @@ import NetContext from "../contexts/netContext";
 import DebugContext from "../contexts/debugContext";
 import I18nContext from "../contexts/i18nContext";
 import AuthContext from "../contexts/authContext";
-import {AppBar, Grid2, Menu, MenuItem, Toolbar, Typography} from "@mui/material";
+import {
+    AppBar,
+    Box,
+    Drawer,
+    Grid2,
+    List,
+    ListItem,
+    ListItemButton, ListItemText,
+    Menu,
+    MenuItem,
+    Toolbar,
+    Typography
+} from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import {doI18n} from "../lib/i18nLib";
 import {Public, PublicOff, Cloud, CloudOff} from "@mui/icons-material";
@@ -17,9 +29,8 @@ function Header({titleKey, widget, currentId}) {
     const {debugRef} = useContext(DebugContext);
     const {i18nRef} = useContext(I18nContext);
     const {authRef} = useContext(AuthContext);
-    const [hamburgerAnchorEl, setHamburgerAnchorEl] = useState(null);
     const [authAnchorEl, setAuthAnchorEl] = useState(null);
-    const hamburgerOpen = Boolean(hamburgerAnchorEl);
+    const [drawerIsOpen, setDrawerIsOpen] = useState(false);
     const authOpen = Boolean(authAnchorEl);
     const [menuItems, setMenuItems] = useState([]);
 
@@ -39,7 +50,7 @@ function Header({titleKey, widget, currentId}) {
         },
         [debugRef.current]
     )
-    const currentUrl = menuItems.filter(i => i.id === currentId).length === 1 ? menuItems.filter(i => i.id === currentId)[0].url: "";
+    const currentUrl = menuItems.filter(i => i.id === currentId).length === 1 ? menuItems.filter(i => i.id === currentId)[0].url : "";
     return <div sx={{flexGrow: 1}}>
         <AppBar position="static">
             <Toolbar sx={{backgroundColor: "#441650"}}>
@@ -49,38 +60,39 @@ function Header({titleKey, widget, currentId}) {
                        sx={{flexGrow: 1}}>
                     <Grid2 container size={{xs: 1}} justifyContent="flex-start">
                         <MenuIcon
-                            onClick={e => setHamburgerAnchorEl(e.currentTarget)}
+                            onClick={e => setDrawerIsOpen(true)}
                         />
-                        <Menu
-                            id="app-menu"
-                            anchorEl={hamburgerAnchorEl}
-                            open={hamburgerOpen}
-                            onClose={() => setHamburgerAnchorEl(null)}
-                            anchorOrigin={{
-                                vertical: 'top',
-                                horizontal: 'left',
-                            }}
-                            transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'left',
-                            }}
-                        >{
-                            menuItems
-                                .map(
-                                    (mi, n) => mi.id === currentId ?
-                                        <MenuItem key={n}><i>{doI18n(`pages:${mi.id}:title`, i18nRef.current)}</i></MenuItem> :
-                                        <MenuItem
-                                            key={n}
-                                            onClick={() => {
-                                                window.location.href = mi.url
-                                            }}
-                                            disabled={mi.requires.net && !enabledRef.current}
-                                        >{
-                                            doI18n(`pages:${mi.id}:title`, i18nRef.current)
-                                        }</MenuItem>
-                                )
-                        }
-                        </Menu>
+                        <Drawer
+                            open={drawerIsOpen} onClose={() => setDrawerIsOpen(false)}
+                        >
+                            <Box sx={{width: 250}} role="presentation" onClick={() => setDrawerIsOpen(false)}>
+                                <List>
+                                    {
+                                        menuItems
+                                            .map(
+                                                (mi, n) => mi.id === currentId ?
+                                                    <ListItem key={n} disablePadding>
+                                                        <ListItemButton selected={true}>
+                                                            <ListItemText
+                                                                primary={doI18n(`pages:${mi.id}:title`, i18nRef.current)}/>
+                                                        </ListItemButton>
+                                                    </ListItem> :
+                                                    <ListItem key={n} disablePadding>
+                                                        <ListItemButton
+                                                            disabled={mi.requires.net && !enabledRef.current}
+                                                            onClick={() => {
+                                                                window.location.href = mi.url
+                                                            }}
+                                                        >
+                                                            <ListItemText
+                                                                primary={doI18n(`pages:${mi.id}:title`, i18nRef.current)}/>
+                                                        </ListItemButton>
+                                                    </ListItem>
+                                            )
+                                    }
+                                </List>
+                            </Box>
+                        </Drawer>
                     </Grid2>
                     <Grid2 container size={{xs: 5, md: 4, lg: 3}} justifyContent="flex-start">
                         {titleKey && titleKey.length > 0 &&
@@ -93,7 +105,7 @@ function Header({titleKey, widget, currentId}) {
                         {
                             enabledRef.current ?
                                 <>
-                                <Cloud onClick={e => setAuthAnchorEl(e.currentTarget)}/>
+                                    <Cloud onClick={e => setAuthAnchorEl(e.currentTarget)}/>
                                     <Menu
                                         id="auth-menu"
                                         anchorEl={authAnchorEl}
@@ -111,13 +123,13 @@ function Header({titleKey, widget, currentId}) {
                                         Object.entries(authRef.current)
                                             .map(
                                                 (mi, n) => <MenuItem
-                                                        key={n}
-                                                        onClick={() => {
-                                                            window.location.href = mi[1].isActive ? `/gitea/logout/${mi[0]}/` : `/gitea/login/${mi[0]}/${currentUrl}`;
-                                                        }}
-                                                    >{
-                                                        `${mi[0]} ${mi[1].isActive ? "✓" : "❌"}`
-                                                    }</MenuItem>
+                                                    key={n}
+                                                    onClick={() => {
+                                                        window.location.href = mi[1].isActive ? `/gitea/logout/${mi[0]}/` : `/gitea/login/${mi[0]}/${currentUrl}`;
+                                                    }}
+                                                >{
+                                                    `${mi[0]} ${mi[1].isActive ? "✓" : "❌"}`
+                                                }</MenuItem>
                                             )
                                     }
                                     </Menu>
