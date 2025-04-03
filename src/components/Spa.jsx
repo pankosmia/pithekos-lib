@@ -192,6 +192,8 @@ function Spa({children}) {
                 if ((!currentProjectRef.current || newCurrentProject.source !== currentProjectRef.current.source) || (newCurrentProject.organization !== currentProjectRef.current.organization) || (newCurrentProject.project !== currentProjectRef.current.project)) {
                     setCurrentProject(newCurrentProject);
                 }
+            } else {
+                setCurrentProject(null);
             }
         }
     }
