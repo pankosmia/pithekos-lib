@@ -7,7 +7,7 @@ import MessagesContext from "../contexts/messagesContext";
 import I18nContext from "../contexts/i18nContext";
 import AuthContext from "../contexts/authContext";
 import TypographyContext from "../contexts/typographyContext";
-import CurrentProjectContext from "../contexts/currentProject";
+import CurrentProjectContext from "../contexts/currentProjectContext";
 import {Box} from "@mui/material";
 
 function AppWrapper({

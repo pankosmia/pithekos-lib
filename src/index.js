@@ -7,6 +7,7 @@ import netContext from "./contexts/netContext";
 import bcvContext from "./contexts/bcvContext";
 import authContext from "./contexts/authContext";
 import typographyContext from "./contexts/typographyContext";
+import currentProjectContext from "./contexts/currentProjectContext"
 import {doI18n} from "./lib/i18nLib";
 import {getJson, getAndSetJson, getText} from "./lib/getLib";
 import {postEmptyJson, postJson} from "./lib/postLib";
@@ -18,6 +19,7 @@ export {
     Header,
     authContext,
     typographyContext,
+    currentProjectContext,
     debugContext,
     i18nContext,
     messagesContext,
