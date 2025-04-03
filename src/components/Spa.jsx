@@ -178,20 +178,18 @@ function Spa({children}) {
 
     const currentProjectHandler = ev => {
         if (ev.data === null) {
-            if (!(currentProject === null)) { // different types so must be different
+            if (!(currentProjectRef.current === null)) { // different types so must be different
                 setCurrentProject(null);
             } // Otherwise both are null so no-op
-        } else if (currentProject === null) { // different types so must be different
-            setCurrentProject(ev.data);
-        } else { // Two non-null values
+        } else { // ev.data is not null
             const currentProjectBits = ev.data.split('--');
             if (currentProjectBits.length === 3) {
-                const newCurrentProject = {
+                let newCurrentProject = {
                     source: currentProjectBits[0],
                     organization: currentProjectBits[1],
                     project: currentProjectBits[2]
                 };
-                if ((newCurrentProject.source !== currentProjectRef.current.source) || (newCurrentProject.organization !== currentProjectRef.current.organization) || (newCurrentProject.project !== currentProjectRef.current.project)) {
+                if ((!currentProjectRef.current || newCurrentProject.source !== currentProjectRef.current.source) || (newCurrentProject.organization !== currentProjectRef.current.organization) || (newCurrentProject.project !== currentProjectRef.current.project)) {
                     setCurrentProject(newCurrentProject);
                 }
             }
