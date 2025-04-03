@@ -185,14 +185,15 @@ function Spa({children}) {
             setCurrentProject(ev.data);
         } else { // Two non-null values
             const currentProjectBits = ev.data.split('--');
-        if (currentProjectBits.length === 3) {
-            const newCurrentProject = {
-                source: currentProjectBits[0],
-                organization: currentProjectBits[1],
-                project: currentProjectBits[2]
-            };
-            if ((newCurrentProject.source !== currentProjectRef.current.source) || (newCurrentProject.organization !== currentProjectRef.current.organization) || (newCurrentProject.project !== currentProjectRef.current.project)) {
-                setCurrentProject(newCurrentProject);
+            if (currentProjectBits.length === 3) {
+                const newCurrentProject = {
+                    source: currentProjectBits[0],
+                    organization: currentProjectBits[1],
+                    project: currentProjectBits[2]
+                };
+                if ((newCurrentProject.source !== currentProjectRef.current.source) || (newCurrentProject.organization !== currentProjectRef.current.organization) || (newCurrentProject.project !== currentProjectRef.current.project)) {
+                    setCurrentProject(newCurrentProject);
+                }
             }
         }
     }
