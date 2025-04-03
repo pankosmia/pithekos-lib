@@ -7,9 +7,19 @@ import MessagesContext from "../contexts/messagesContext";
 import I18nContext from "../contexts/i18nContext";
 import AuthContext from "../contexts/authContext";
 import TypographyContext from "../contexts/typographyContext";
+import CurrentProjectContext from "../contexts/currentProject";
 import {Box} from "@mui/material";
 
-function AppWrapper({children, netValue, debugValue, bcvValue, i18nValue, authValue, typographyValue}) {
+function AppWrapper({
+                        children,
+                        netValue,
+                        debugValue,
+                        bcvValue,
+                        i18nValue,
+                        authValue,
+                        typographyValue,
+                        currentProjectValue
+                    }) {
 
     const [messages, setMessages] = useState([]);
     const messageValue = {messages, setMessages};
@@ -39,17 +49,19 @@ function AppWrapper({children, netValue, debugValue, bcvValue, i18nValue, authVa
     return <I18nContext.Provider value={i18nValue}>
         <TypographyContext.Provider value={typographyValue}>
             <AuthContext.Provider value={authValue}>
-                <BcvContext.Provider value={bcvValue}>
-                    <MessagesContext.Provider value={messageValue}>
-                        <DebugContext.Provider value={debugValue}>
-                            <NetContext.Provider value={netValue}>
-                                <Box sx={{height: '100vh', overflow: 'hidden'}}>
-                                    {children}
-                                </Box>
-                            </NetContext.Provider>
-                        </DebugContext.Provider>
-                    </MessagesContext.Provider>
-                </BcvContext.Provider>
+                <CurrentProjectContext.Provider value={currentProjectValue}>
+                    <BcvContext.Provider value={bcvValue}>
+                        <MessagesContext.Provider value={messageValue}>
+                            <DebugContext.Provider value={debugValue}>
+                                <NetContext.Provider value={netValue}>
+                                    <Box sx={{height: '100vh', overflow: 'hidden'}}>
+                                        {children}
+                                    </Box>
+                                </NetContext.Provider>
+                            </DebugContext.Provider>
+                        </MessagesContext.Provider>
+                    </BcvContext.Provider>
+                </CurrentProjectContext.Provider>
             </AuthContext.Provider>
         </TypographyContext.Provider>
     </I18nContext.Provider>

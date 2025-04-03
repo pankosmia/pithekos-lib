@@ -52,6 +52,13 @@ function Spa({children}) {
         _setTypography(nv);
     };
 
+    const [currentProject, _setCurrentProject] = useState(null);
+    const currentProjectRef = useRef(currentProject);
+    const setCurrentProject = nv => {
+        currentProjectRef.current = nv;
+        _setCurrentProject(nv);
+    };
+
     const doFetchI18n = async () => {
         const i18nResponse = await getJson("/i18n/flat", debugRef.current);
         if (i18nResponse.ok) {
@@ -169,6 +176,27 @@ function Spa({children}) {
         }
     }
 
+    const currentProjectHandler = ev => {
+        if (ev.data === null) {
+            if (!(currentProject === null)) { // different types so must be different
+                setCurrentProject(null);
+            } // Otherwise both are null so no-op
+        } else if (currentProject === null) { // different types so must be different
+            setCurrentProject(ev.data);
+        } else { // Two non-null values
+            const currentProjectBits = ev.data.split('--');
+        if (currentProjectBits.length === 3) {
+            const newCurrentProject = {
+                source: currentProjectBits[0],
+                organization: currentProjectBits[1],
+                project: currentProjectBits[2]
+            };
+            if ((newCurrentProject.source !== currentProjectRef.current.source) || (newCurrentProject.organization !== currentProjectRef.current.organization) || (newCurrentProject.project !== currentProjectRef.current.project)) {
+                setCurrentProject(newCurrentProject);
+            }
+        }
+    }
+
     const miscHandler = ev => {
         const dataBits = ev.data.split('--');
         if (dataBits.length === 4) {
@@ -214,6 +242,8 @@ function Spa({children}) {
                         languagesHandler(event)
                     } else if (event.event === "typography") {
                         typographyHandler(event)
+                    } else if (event.event === "current_project") {
+                        currentProjectHandler(event)
                     }
 
                 },
@@ -235,6 +265,7 @@ function Spa({children}) {
     const authValue = {auth, setAuth, authRef};
     const i18nValue = {i18n, setI18n, i18nRef};
     const typographyValue = {typography, setTypography, typographyRef};
+    const currentProjectValue = {currentProject, setCurrentProject, currentProjectRef}
 
     return <SnackbarProvider maxSnack={3}>
         <AppWrapper
@@ -244,6 +275,7 @@ function Spa({children}) {
             bcvValue={bcvValue}
             authValue={authValue}
             typographyValue={typographyValue}
+            currentProjectValue={currentProjectValue}
         >
             {children}
         </AppWrapper>
