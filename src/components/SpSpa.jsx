@@ -1,12 +1,11 @@
 import React from "react";
 import {SnackbarProvider} from "notistack";
+import SpaContainer from "./SpaContainer";
 import SpSpaPage from "./SpSpaPage";
-import Spa from "./Spa";
 
 function SpSpa({children, titleKey, requireNet, currentId, widget, margin}) {
 
-    return <SnackbarProvider maxSnack={3}>
-        <Spa>
+    return <SpaContainer>
             <SpSpaPage
                 titleKey={titleKey}
                 requireNet={requireNet}
@@ -16,8 +15,7 @@ function SpSpa({children, titleKey, requireNet, currentId, widget, margin}) {
             >
                 {children}
             </SpSpaPage>
-        </Spa>
-    </SnackbarProvider>
+        </SpaContainer>
 }
 
 export default SpSpa;
