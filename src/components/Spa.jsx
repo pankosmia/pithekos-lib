@@ -26,9 +26,9 @@ function Spa({children}) {
         _setAuth(nv);
     };
     const [systemBcv, _setSystemBcv] = useState({
-        bookCode: "JHN",
-        chapterNum: 3,
-        verseNum: 16
+        bookCode: "TIT",
+        chapterNum: 1,
+        verseNum: 1
     });
     const bcvRef = useRef(systemBcv);
     const setSystemBcv = nv => {
