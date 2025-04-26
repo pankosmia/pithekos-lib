@@ -61,7 +61,7 @@ function Header({titleKey, widget, currentId}) {
                        sx={{flexGrow: 1}}>
                     <Grid2 container size={{xs: 1}} justifyContent="flex-start">
                         <IconButton onClick={e => setDrawerIsOpen(true)}>
-                            <MenuIcon/>
+                            <MenuIcon sx={{color: "#FFF"}}/>
                         </IconButton>
                         <Drawer
                             open={drawerIsOpen} onClose={() => setDrawerIsOpen(false)}
