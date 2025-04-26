@@ -107,7 +107,7 @@ function Header({titleKey, widget, currentId}) {
                             <>
                                 <IconButton onClick={e => setAuthAnchorEl(e.currentTarget)}
                                             disabled={!enabledRef.current}>
-                                    {enabledRef.current ? <Cloud/> : <CloudOff/>}
+                                    {enabledRef.current ? <Cloud sx={{color: "#FFF"}}/> : <CloudOff  sx={{color: "#AAA"}}/>}
                                 </IconButton>
                                 <Menu
                                     id="auth-menu"
