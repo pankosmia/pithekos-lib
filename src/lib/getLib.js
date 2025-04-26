@@ -5,7 +5,8 @@ async function getJson(url, debug=false) {
             const result = {
                 url,
                 ok: false,
-                status: response.status
+                status: response.status,
+                error: await response.text()
             };
             if (debug) {
                 console.log("getJson", result);
@@ -42,7 +43,8 @@ async function getText(url, debug=false) {
             const result = {
                 url,
                 ok: false,
-                status: response.status
+                status: response.status,
+                error: await response.text()
             };
             if (debug) {
                 console.log("getText", result);
@@ -73,11 +75,13 @@ async function getText(url, debug=false) {
     }
 }
 
-const getAndSetJson = async ({url, setter}) => {
-    const response = await getJson(url);
+const getAndSetJson = async ({url, setter, debug=false}) => {
+    const response = await getJson(url, debug);
     if (response.ok
     ) {
         setter(response.json);
+    } else {
+        return response;
     }
 }
 

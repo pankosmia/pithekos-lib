@@ -66,8 +66,11 @@ function Spa({children}) {
         } else {
             enqueueSnackbar(
                 `Could not load i18n: ${i18nResponse.error}`,
-                {variant: "error"}
-            )
+                {
+                    variant: "error",
+                    anchorOrigin: {vertical: "bottom", horizontal: "left"},
+                    persist: true                }
+        )
         }
     }
 
@@ -78,7 +81,11 @@ function Spa({children}) {
         } else {
             enqueueSnackbar(
                 `Could not load typography: ${typoResponse.error}`,
-                {variant: "error"}
+                {
+                    variant: "error",
+                    anchorOrigin: {vertical: "bottom", horizontal: "left"},
+                    persist: true
+                }
             )
         }
     }
@@ -105,7 +112,11 @@ function Spa({children}) {
                 } else {
                     enqueueSnackbar(
                         `Could not load bcv: ${bcvResponse.error}`,
-                        {variant: "error"}
+                        {
+                            variant: "error",
+                            anchorOrigin: {vertical: "bottom", horizontal: "left"},
+                            persist: true
+                }
                     )
                 }
             }
@@ -205,7 +216,8 @@ function Spa({children}) {
                 `${dataBits[2]} => ${dataBits[3]}`,
                 {
                     variant: dataBits[0],
-                    anchorOrigin: {vertical: "bottom", horizontal: "right"}
+                    anchorOrigin: {vertical: "bottom", horizontal: "left"},
+                    persist: dataBits[0] === "error"
                 }
             );
         }

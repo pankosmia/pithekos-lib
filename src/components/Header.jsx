@@ -9,6 +9,7 @@ import {
     Box,
     Drawer,
     Grid2,
+    IconButton,
     List,
     ListItem,
     ListItemButton, ListItemText,
@@ -103,80 +104,71 @@ function Header({titleKey, widget, currentId}) {
                     </Grid2>
                     <Grid2 container size={{xs: 3, md: 2}} justifyContent="flex-end">
                         {
-                            enabledRef.current ?
-                                <>
-                                    <Cloud onClick={e => setAuthAnchorEl(e.currentTarget)}/>
-                                    <Menu
-                                        id="auth-menu"
-                                        anchorEl={authAnchorEl}
-                                        open={authOpen}
-                                        onClose={() => setAuthAnchorEl(null)}
-                                        anchorOrigin={{
-                                            vertical: 'top',
-                                            horizontal: 'left',
-                                        }}
-                                        transformOrigin={{
-                                            vertical: 'top',
-                                            horizontal: 'left',
-                                        }}
-                                    >{
-                                        Object.entries(authRef.current)
-                                            .map(
-                                                (mi, n) => <MenuItem
-                                                    key={n}
-                                                    onClick={() => {
-                                                        window.location.href = mi[1].isActive ? `/gitea/logout/${mi[0]}/` : `/gitea/login/${mi[0]}/${currentUrl}`;
-                                                    }}
-                                                >{
-                                                    `${mi[0]} ${mi[1].isActive ? "✓" : "❌"}`
-                                                }</MenuItem>
-                                            )
-                                    }
-                                    </Menu>
-                                </>
-                                :
-                                <CloudOff disabled={true} sx={{color: "#AAAAAA"}}/>
-                        }
-                        {
-                            enabledRef.current ?
-                                <Public
-                                    onClick={
-                                        async () => {
-                                            const response = await getJson(`/net/disable`, debugRef.current);
-                                            if (!response.ok) {
-                                                setMessages([...messages, `warning--5--${response.url}--${response.status}`])
-                                            }
-                                        }
-                                    }
-                                    sx={{color: "#33FF33", ml: 2}}
-                                /> :
-                                <PublicOff
-                                    onClick={
-                                        async () => {
-                                            const response = await getJson(`/net/enable`, debugRef.current);
-                                            if (!response.ok) {
-                                                setMessages([...messages, `warning--5--${response.url}--${response.status}`])
-                                            }
-                                        }
-                                    }
-                                    sx={{color: "#AAAAAA", ml: 2}}
-                                />}
-                        {
-                            currentId.includes("settings") ?
-                                <SettingsIcon
-                                    color="inherit"
-                                    aria-label="settings"
-                                    sx={{ml: 2, color: "#AAAAAA"}}
-                                /> :
-                                <SettingsIcon
-                                    color="inherit"
-                                    aria-label="settings"
-                                    sx={{ml: 2}}
-                                    onClick={() => {
-                                        window.location.href = "/clients/settings"
+                            <>
+                                <IconButton onClick={e => setAuthAnchorEl(e.currentTarget)}
+                                            disabled={!enabledRef.current}>
+                                    {enabledRef.current ? <Cloud/> : <CloudOff/>}
+                                </IconButton>
+                                <Menu
+                                    id="auth-menu"
+                                    anchorEl={authAnchorEl}
+                                    open={authOpen}
+                                    onClose={() => setAuthAnchorEl(null)}
+                                    anchorOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'left',
                                     }}
-                                />
+                                    transformOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'left',
+                                    }}
+                                >{
+                                    Object.entries(authRef.current)
+                                        .map(
+                                            (mi, n) => <MenuItem
+                                                key={n}
+                                                onClick={() => {
+                                                    window.location.href = mi[1].isActive ? `/gitea/logout/${mi[0]}/` : `/gitea/login/${mi[0]}/${currentUrl}`;
+                                                }}
+                                            >{
+                                                `${mi[0]} ${mi[1].isActive ? "✓" : "❌"}`
+                                            }</MenuItem>
+                                        )
+                                }
+                                </Menu>
+                            </>
                         }
+                        {
+                            <IconButton
+                                onClick={
+                                    async () => {
+                                        const response = await getJson(`/net/disable`, debugRef.current);
+                                        if (!response.ok) {
+                                            setMessages([...messages, `warning--5--${response.url}--${response.status}`])
+                                        }
+                                    }
+                                }
+                                sx={{color: "#33FF33", ml: 2}}
+                            >
+                                {enabledRef.current ? <Public sx={{color: "#33FF33", ml: 2}}/> :
+                                    <PublicOff sx={{color: "#AAAAAA", ml: 2}}/>}
+                            </IconButton>
+                        }
+                        <IconButton>
+                            {
+                                    <SettingsIcon
+                                        color="inherit"
+                                        aria-label="settings"
+                                        onClick={
+                                            () => {
+                                                window.location.href = "/clients/settings"
+                                            }
+                                        }
+                                        disabled={currentId.includes("settings")}
+                                        sx={{ml: 2, color: currentId.includes("settings") ? "#AAA" : "#FFF"}}
+                                    />
+                            }
+                        </IconButton>
                     </Grid2>
                 </Grid2>
             </Toolbar>

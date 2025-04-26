@@ -5,7 +5,8 @@ async function postEmptyJson(url, debug=false) {
             const result = {
                 url,
                 ok: false,
-                status: response.status
+                status: response.status,
+                error: await response.text
             };
             if (debug) {
                 console.log("postEmptyJson", result);
@@ -48,7 +49,8 @@ async function postJson(url, body, debug=false, contentType = "application/json"
             const result = {
                 url,
                 ok: false,
-                status: response.status
+                status: response.status,
+                error: await response.text
             };
             if (debug) {
                 console.log("postJson", result);
