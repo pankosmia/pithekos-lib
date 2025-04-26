@@ -60,9 +60,9 @@ function Header({titleKey, widget, currentId}) {
                        alignItems="center"
                        sx={{flexGrow: 1}}>
                     <Grid2 container size={{xs: 1}} justifyContent="flex-start">
-                        <MenuIcon
-                            onClick={e => setDrawerIsOpen(true)}
-                        />
+                        <IconButton onClick={e => setDrawerIsOpen(true)}>
+                            <MenuIcon/>
+                        </IconButton>
                         <Drawer
                             open={drawerIsOpen} onClose={() => setDrawerIsOpen(false)}
                         >
@@ -107,7 +107,8 @@ function Header({titleKey, widget, currentId}) {
                             <>
                                 <IconButton onClick={e => setAuthAnchorEl(e.currentTarget)}
                                             disabled={!enabledRef.current}>
-                                    {enabledRef.current ? <Cloud sx={{color: "#FFF"}}/> : <CloudOff  sx={{color: "#AAA"}}/>}
+                                    {enabledRef.current ? <Cloud sx={{color: "#FFF"}}/> :
+                                        <CloudOff sx={{color: "#AAA"}}/>}
                                 </IconButton>
                                 <Menu
                                     id="auth-menu"
@@ -142,7 +143,7 @@ function Header({titleKey, widget, currentId}) {
                             <IconButton
                                 onClick={
                                     async () => {
-                                        const response = await getJson(`/net/disable`, debugRef.current);
+                                        const response = await getJson(enabledRef.current ? "/net/disable" : "/net/enable", debugRef.current);
                                         if (!response.ok) {
                                             setMessages([...messages, `warning--5--${response.url}--${response.status}`])
                                         }
@@ -156,17 +157,17 @@ function Header({titleKey, widget, currentId}) {
                         }
                         <IconButton>
                             {
-                                    <SettingsIcon
-                                        color="inherit"
-                                        aria-label="settings"
-                                        onClick={
-                                            () => {
-                                                window.location.href = "/clients/settings"
-                                            }
+                                <SettingsIcon
+                                    color="inherit"
+                                    aria-label="settings"
+                                    onClick={
+                                        () => {
+                                            window.location.href = "/clients/settings"
                                         }
-                                        disabled={currentId.includes("settings")}
-                                        sx={{ml: 2, color: currentId.includes("settings") ? "#AAA" : "#FFF"}}
-                                    />
+                                    }
+                                    disabled={currentId.includes("settings")}
+                                    sx={{ml: 2, color: currentId.includes("settings") ? "#AAA" : "#FFF"}}
+                                />
                             }
                         </IconButton>
                     </Grid2>
