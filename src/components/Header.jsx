@@ -37,6 +37,14 @@ function Header({titleKey, widget, currentId}) {
 
     useEffect(
         () => {
+            const appI18n = doI18n("branding:software:name", i18nRef.current);
+            const pageI18n = doI18n(titleKey, i18nRef.current);
+            document.title = `${pageI18n} - ${appI18n}`;
+        }
+    );
+
+    useEffect(
+        () => {
             const doFetch = async () => {
                 const fetched = await getJson("/list-clients", debugRef.current);
                 if (fetched.ok) {
