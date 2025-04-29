@@ -68,7 +68,7 @@ function Header({titleKey, widget, currentId}) {
                 <Grid2 container direction="row"
                        justifyContent="flex-end"
                        alignItems="center"
-                       sx={{flexGrow: 1}}>
+                       >
                     <Grid2 container size={{xs: 1}} justifyContent="flex-start" alignItems="left">
                         <IconButton onClick={e => setDrawerIsOpen(true)}>
                             <MenuIcon sx={{color: "#FFF"}}/>
@@ -109,7 +109,7 @@ function Header({titleKey, widget, currentId}) {
                         {titleKey && titleKey.length > 0 &&
                             <Typography variant="h6">{doI18n(titleKey, i18nRef.current)}</Typography>}
                     </Grid2>
-                    <Grid2 container size={{xs: 2, md: 3, lg: 6}} justifyContent="flex-start">
+                    <Grid2 container size={{xs: 2, md: 4, lg: 5}} justifyContent="flex-start">
                         {widget}
                     </Grid2>
                     <Grid2 container size={{xs: 4, md: 3}} justifyContent="flex-end">
