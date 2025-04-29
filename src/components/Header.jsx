@@ -20,9 +20,11 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import {doI18n} from "../lib/i18nLib";
-import {Public, PublicOff, Cloud, CloudOff} from "@mui/icons-material";
+import {Cloud, CloudOff} from "@mui/icons-material";
 import {getJson} from "../lib/getLib";
+import {postEmptyJson} from "../lib/postLib";
 import SettingsIcon from "@mui/icons-material/Settings";
+import InternetSwitch from "./InternetSwitch";
 
 function Header({titleKey, widget, currentId}) {
     const {messages, setMessages} = useContext(MessagesContext);
@@ -67,7 +69,7 @@ function Header({titleKey, widget, currentId}) {
                        justifyContent="flex-end"
                        alignItems="center"
                        sx={{flexGrow: 1}}>
-                    <Grid2 container size={{xs: 1}} justifyContent="flex-start">
+                    <Grid2 container size={{xs: 1}} justifyContent="flex-start" alignItems="left">
                         <IconButton onClick={e => setDrawerIsOpen(true)}>
                             <MenuIcon sx={{color: "#FFF"}}/>
                         </IconButton>
@@ -148,20 +150,12 @@ function Header({titleKey, widget, currentId}) {
                             </>
                         }
                         {
-                            <IconButton
-                                onClick={
-                                    async () => {
-                                        const response = await getJson(enabledRef.current ? "/net/disable" : "/net/enable", debugRef.current);
-                                        if (!response.ok) {
-                                            setMessages([...messages, `warning--5--${response.url}--${response.status}`])
-                                        }
-                                    }
+                            <InternetSwitch
+                                internet={enabledRef.current}
+                                setInternet={
+                                    () => postEmptyJson(enabledRef.current ? '/net/disable' : '/net/enable', debugRef.current)
                                 }
-                                sx={{color: "#33FF33", ml: 2}}
-                            >
-                                {enabledRef.current ? <Public sx={{color: "#33FF33", ml: 2}}/> :
-                                    <PublicOff sx={{color: "#AAAAAA", ml: 2}}/>}
-                            </IconButton>
+                            />
                         }
                         <IconButton>
                             {

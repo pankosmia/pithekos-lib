@@ -280,7 +280,7 @@ function Spa({children}) {
     const typographyValue = {typography, setTypography, typographyRef};
     const currentProjectValue = {currentProject, setCurrentProject, currentProjectRef}
 
-    return <SnackbarProvider maxSnack={3}>
+    return <SnackbarProvider maxSnack={6}>
         <AppWrapper
             netValue={netValue}
             debugValue={debugValue}
