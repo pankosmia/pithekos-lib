@@ -65,14 +65,14 @@ function Header({titleKey, widget, currentId}) {
     return <Box display="flex-start" sx={{flexGrow: 1, m:0, p:0}}>
         <AppBar position="static" sx={{m:0, p:0}}>
             <Toolbar sx={{backgroundColor: "#441650", m:0, p:0}}>
-                <Box sx={{mr: 2}}>
+                <Box sx={{m:0, mr: 2}}>
                     <IconButton onClick={e => setDrawerIsOpen(true)}>
                         <MenuIcon sx={{color: "#FFF"}}/>
                     </IconButton>
                     <Drawer
                         open={drawerIsOpen} onClose={() => setDrawerIsOpen(false)}
                     >
-                        <Box sx={{width: 250}} role="presentation" onClick={() => setDrawerIsOpen(false)}>
+                        <Box sx={{width: 250, m:0, p: 0}} role="presentation" onClick={() => setDrawerIsOpen(false)}>
                             <List>
                                 {
                                     menuItems
@@ -102,11 +102,11 @@ function Header({titleKey, widget, currentId}) {
                     </Drawer>
                 </Box>
                 {titleKey && titleKey.length > 0 &&
-                    <Typography variant="h6">{doI18n(titleKey, i18nRef.current)}</Typography>}
-                <Box sx={{flexGrow: 1}}>
+                    <Typography variant="h6" sx={{m:0, p:0}}>{doI18n(titleKey, i18nRef.current)}</Typography>}
+                <Box sx={{flexGrow: 1, m:0, p:0}}>
                     {widget}
                 </Box>
-                <Box>
+                <Box sx={{m:0, p:0}}>
                     <IconButton onClick={e => setAuthAnchorEl(e.currentTarget)}
                                 disabled={!enabledRef.current}>
                         {enabledRef.current ? <Cloud sx={{color: "#FFF", mr: 2}}/> :
@@ -140,13 +140,15 @@ function Header({titleKey, widget, currentId}) {
                     }
                     </Menu>
                 </Box>
+                <Box sx={{m:0, p:0}}>
                 <InternetSwitch
                     internet={enabledRef.current}
                     setInternet={
                         () => postEmptyJson(enabledRef.current ? '/net/disable' : '/net/enable', debugRef.current)
                     }
                 />
-                <IconButton>
+                </Box>
+                <IconButton sx={{m:0, p:0}}>
                     {
                         <SettingsIcon
                             color="inherit"

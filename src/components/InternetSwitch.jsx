@@ -30,8 +30,8 @@ export default function InternetSwitch({internet, setInternet}) {
                     borderRadius: 2,
                     backgroundColor: "#9E9E9E",
                     p: 0,
-                    pr: 3,
-                    pl: 3,
+                    pr: 2,
+                    pl: 2,
                     m: 0
                 }}
             >
