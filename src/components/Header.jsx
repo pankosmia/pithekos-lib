@@ -112,7 +112,7 @@ function Header({titleKey, widget, currentId}) {
                     <Grid2 container size={{xs: 2, md: 4, lg: 5}} justifyContent="flex-start">
                         {widget}
                     </Grid2>
-                    <Grid2 container size={{xs: 4, md: 3}} justifyContent="flex-end">
+                    <Grid2 container size={{xs: 4, md: 3, lg: 3}} justifyContent="flex-end">
                         {
                             <>
                                 <IconButton onClick={e => setAuthAnchorEl(e.currentTarget)}
