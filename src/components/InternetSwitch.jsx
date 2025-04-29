@@ -29,7 +29,9 @@ export default function InternetSwitch({internet, setInternet}) {
                 sx={{
                     borderRadius: 1,
                     backgroundColor: "#9E9E9E",
-                    p: 1
+                    p: 1,
+                    pr: 3,
+                    pl: 3
                 }}
             >
                 <FormControlLabel

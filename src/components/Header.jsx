@@ -65,7 +65,7 @@ function Header({titleKey, widget, currentId}) {
     return <Box display="flex-start" sx={{flexGrow: 1, m:0, p:0}}>
         <AppBar position="static">
             <Toolbar sx={{backgroundColor: "#441650"}}>
-                <Box>
+                <Box sx={{mr: 2}}>
                     <IconButton onClick={e => setDrawerIsOpen(true)}>
                         <MenuIcon sx={{color: "#FFF"}}/>
                     </IconButton>
@@ -109,8 +109,8 @@ function Header({titleKey, widget, currentId}) {
                 <Box>
                     <IconButton onClick={e => setAuthAnchorEl(e.currentTarget)}
                                 disabled={!enabledRef.current}>
-                        {enabledRef.current ? <Cloud sx={{color: "#FFF"}}/> :
-                            <CloudOff sx={{color: "#AAA"}}/>}
+                        {enabledRef.current ? <Cloud sx={{color: "#FFF", mr: 2}}/> :
+                            <CloudOff sx={{color: "#AAA", mr: 2}}/>}
                     </IconButton>
                     <Menu
                         id="auth-menu"
