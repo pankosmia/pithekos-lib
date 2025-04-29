@@ -64,7 +64,7 @@ function Header({titleKey, widget, currentId}) {
     const currentUrl = menuItems.filter(i => i.id === currentId).length === 1 ? menuItems.filter(i => i.id === currentId)[0].url : "";
     return <Box display="flex-start" sx={{flexGrow: 1, m:0, p:0}}>
         <AppBar position="static" sx={{m:0, p:0}}>
-            <Toolbar dense sx={{backgroundColor: "#441650", m:0, p:0}}>
+            <Toolbar variant="dense" sx={{backgroundColor: "#441650", m:0, p:0}}>
                 <Box sx={{m:0, mr: 2}}>
                     <IconButton onClick={e => setDrawerIsOpen(true)}>
                         <MenuIcon sx={{color: "#FFF"}}/>
