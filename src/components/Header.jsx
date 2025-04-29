@@ -107,7 +107,7 @@ function Header({titleKey, widget, currentId}) {
                     {widget}
                 </Box>
                 <Box sx={{m:0, p:0}}>
-                    <IconButton onClick={e => setAuthAnchorEl(e.currentTarget)}
+                    <IconButton sx={{m:0, p:0}} onClick={e => setAuthAnchorEl(e.currentTarget)}
                                 disabled={!enabledRef.current}>
                         {enabledRef.current ? <Cloud sx={{color: "#FFF", mr: 2}}/> :
                             <CloudOff sx={{color: "#AAA", mr: 2}}/>}
