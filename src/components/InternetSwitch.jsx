@@ -34,7 +34,7 @@ export default function InternetSwitch({internet, setInternet}) {
             >
                 <FormControlLabel
                     control={
-                        <Switch checked={internet} onChange={handleChange} color="warning" />
+                        <Switch checked={internet} onChange={handleChange} color="warning" size="small" />
                     }
                     label={doI18n(internet ? "components:header:connected" : "components:header:disconnected", i18nRef.current)}
                 />

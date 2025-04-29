@@ -109,10 +109,10 @@ function Header({titleKey, widget, currentId}) {
                         {titleKey && titleKey.length > 0 &&
                             <Typography variant="h6">{doI18n(titleKey, i18nRef.current)}</Typography>}
                     </Grid2>
-                    <Grid2 container size={{xs: 3, md: 4, lg: 6}} justifyContent="flex-start">
+                    <Grid2 container size={{xs: 2, md: 3, lg: 6}} justifyContent="flex-start">
                         {widget}
                     </Grid2>
-                    <Grid2 container size={{xs: 3, md: 2}} justifyContent="flex-end">
+                    <Grid2 container size={{xs: 4, md: 3}} justifyContent="flex-end">
                         {
                             <>
                                 <IconButton onClick={e => setAuthAnchorEl(e.currentTarget)}
