@@ -24,12 +24,12 @@ export default function InternetSwitch({internet, setInternet}) {
     };
 
     return (
-        <Box>
+        <Box sx={{m:0}}>
             <Box
                 sx={{
                     borderRadius: 2,
                     backgroundColor: "#9E9E9E",
-                    p: 1,
+                    p: 0,
                     pr: 3,
                     pl: 3,
                     m: 0
