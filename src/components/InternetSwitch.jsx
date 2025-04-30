@@ -39,7 +39,7 @@ export default function InternetSwitch({internet, setInternet}) {
                         color: "#000"
                 }}
                     control={
-                        <Switch checked={internet} onChange={handleChange} color="warning" size="small" />
+                        <Switch checked={internet} onChange={handleChange} color="warning" size="small" sx: {{fontSize: "small"}} />
                     }
                     label={doI18n(internet ? "components:header:connected" : "components:header:disconnected", i18nRef.current).toUpperCase()}
                 />
