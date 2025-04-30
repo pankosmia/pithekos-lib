@@ -45,7 +45,6 @@ export default function InternetSwitch({internet, setInternet}) {
             >
                 <FormControlLabel
                     sx={{
-                        m: 0,
                         color: "#000"
                     }}
                     control={
@@ -54,8 +53,10 @@ export default function InternetSwitch({internet, setInternet}) {
                     }
                     label={
                         <Typography variant="body2" sx={{color: "#000"}}>
-                            doI18n(internet ? "components:header:connected" : "components:header:disconnected",
-                            i18nRef.current).toUpperCase()
+                            {
+                                doI18n(internet ? "components:header:connected" : "components:header:disconnected",
+                                    i18nRef.current).toUpperCase()
+                            }
                         </Typography>
                     }
                 />
