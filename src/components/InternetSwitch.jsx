@@ -28,7 +28,8 @@ export default function InternetSwitch({internet, setInternet}) {
             <Box
                 sx={{
                     backgroundColor: "#E0E0E0",
-                    color: "000",
+                    color: "#000",
+                    borderRadius: 1,
                     m: 0
                 }}
             >
