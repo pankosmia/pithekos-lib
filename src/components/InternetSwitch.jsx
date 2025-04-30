@@ -40,16 +40,14 @@ export default function InternetSwitch({internet, setInternet}) {
                 sx={{
                     backgroundColor: "#E0E0E0",
                     borderRadius: 1,
-                    m: 0
+                    m: 0,
+                    pl: 2,
+                    pr: 2
                 }}
             >
                 <FormControlLabel
-                    sx={{
-                        color: "#000"
-                    }}
                     control={
-                        <Switch checked={internet} onChange={handleChange} color="warning" size="small"
-                                sx={{fontSize: "small"}}/>
+                        <Switch checked={internet} onChange={handleChange} color="warning" size="small"/>
                     }
                     label={
                         <Typography variant="body2" sx={{color: "#000"}}>
