@@ -27,11 +27,8 @@ export default function InternetSwitch({internet, setInternet}) {
         <Box sx={{m:0}}>
             <Box
                 sx={{
-                    borderRadius: 2,
-                    backgroundColor: "#9E9E9E",
-                    p: 0,
-                    pr: 2,
-                    pl: 2,
+                    backgroundColor: "#E0E0E0",
+                    color: "000",
                     m: 0
                 }}
             >
@@ -40,7 +37,7 @@ export default function InternetSwitch({internet, setInternet}) {
                     control={
                         <Switch checked={internet} onChange={handleChange} color="warning" size="small" />
                     }
-                    label={doI18n(internet ? "components:header:connected" : "components:header:disconnected", i18nRef.current)}
+                    label={doI18n(internet ? "components:header:connected" : "components:header:disconnected", i18nRef.current).toUpperCase()}
                 />
             </Box>
 
