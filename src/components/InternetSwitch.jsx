@@ -50,7 +50,7 @@ export default function InternetSwitch({internet, setInternet}) {
                         <Switch checked={internet} onChange={handleChange} color="warning" size="small"/>
                     }
                     label={
-                        <Typography variant="body2" sx={{color: "#000"}}>
+                        <Typography variant="caption" sx={{color: "#000"}}>
                             {
                                 doI18n(internet ? "components:header:connected" : "components:header:disconnected",
                                     i18nRef.current).toUpperCase()
