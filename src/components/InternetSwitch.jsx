@@ -28,13 +28,16 @@ export default function InternetSwitch({internet, setInternet}) {
             <Box
                 sx={{
                     backgroundColor: "#E0E0E0",
-                    color: "#000",
                     borderRadius: 1,
                     m: 0
                 }}
             >
                 <FormControlLabel
-                    sx={{m:0}}
+                    sx={{
+                        m:0,
+                        fontSize: "small",
+                        color: "#000"
+                }}
                     control={
                         <Switch checked={internet} onChange={handleChange} color="warning" size="small" />
                     }
