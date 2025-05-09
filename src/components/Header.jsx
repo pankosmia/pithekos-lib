@@ -1,5 +1,4 @@
 import React, {useContext, useEffect, useState} from "react";
-import MessagesContext from "../contexts/messagesContext";
 import NetContext from "../contexts/netContext";
 import DebugContext from "../contexts/debugContext";
 import I18nContext from "../contexts/i18nContext";
@@ -8,7 +7,6 @@ import {
     AppBar,
     Box,
     Drawer,
-    Grid2,
     IconButton,
     List,
     ListItem,
@@ -27,7 +25,6 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import InternetSwitch from "./InternetSwitch";
 
 function Header({titleKey, widget, currentId}) {
-    const {messages, setMessages} = useContext(MessagesContext);
     const {enabledRef} = useContext(NetContext);
     const {debugRef} = useContext(DebugContext);
     const {i18nRef} = useContext(I18nContext);

@@ -2,8 +2,20 @@ import React, {useEffect, useRef, useState} from "react";
 import {getJson} from "../lib/getLib";
 import {enqueueSnackbar, SnackbarProvider} from "notistack";
 import {fetchEventSource} from "@microsoft/fetch-event-source";
+import {ThemeProvider, createTheme} from '@mui/material/styles';
 import AppWrapper from './AppWrapper';
 import dcopy from 'deep-copy';
+
+const theme = createTheme({
+    palette: {
+        primary: {
+            main: "#FF0000",
+        },
+        secondary: {
+            main: "#FF7700",
+        },
+    },
+});
 
 function Spa({children}) {
     console.log("Rerender Spa")
@@ -69,8 +81,9 @@ function Spa({children}) {
                 {
                     variant: "error",
                     anchorOrigin: {vertical: "bottom", horizontal: "left"},
-                    persist: true                }
-        )
+                    persist: true
+                }
+            )
         }
     }
 
@@ -116,7 +129,7 @@ function Spa({children}) {
                             variant: "error",
                             anchorOrigin: {vertical: "bottom", horizontal: "left"},
                             persist: true
-                }
+                        }
                     )
                 }
             }
@@ -280,19 +293,21 @@ function Spa({children}) {
     const typographyValue = {typography, setTypography, typographyRef};
     const currentProjectValue = {currentProject, setCurrentProject, currentProjectRef}
 
-    return <SnackbarProvider maxSnack={6}>
-        <AppWrapper
-            netValue={netValue}
-            debugValue={debugValue}
-            i18nValue={i18nValue}
-            bcvValue={bcvValue}
-            authValue={authValue}
-            typographyValue={typographyValue}
-            currentProjectValue={currentProjectValue}
-        >
-            {children}
-        </AppWrapper>
-    </SnackbarProvider>
+    return <ThemeProvider theme={theme}>
+        <SnackbarProvider maxSnack={6}>
+            <AppWrapper
+                netValue={netValue}
+                debugValue={debugValue}
+                i18nValue={i18nValue}
+                bcvValue={bcvValue}
+                authValue={authValue}
+                typographyValue={typographyValue}
+                currentProjectValue={currentProjectValue}
+            >
+                {children}
+            </AppWrapper>
+        </SnackbarProvider>
+    </ThemeProvider>
 }
 
 export default Spa;
