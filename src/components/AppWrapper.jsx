@@ -61,10 +61,16 @@ function AppWrapper({
 
     useEffect(
         () => {
-            getAndSetJson({
-                url: "/app-resources/themes/default.json",
-                setter: setThemeSpec
-            }).then()
+            if (
+                themeSpec.palette &&
+                themeSpec.palette.primary &&
+                themeSpec.palette.primary.main &&
+                themeSpec.palette.primary.main === "#666") {
+                getAndSetJson({
+                    url: "/app-resources/themes/default.json",
+                    setter: setThemeSpec
+                }).then()
+            }
         }
     );
 
