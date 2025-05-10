@@ -9,6 +9,8 @@ import AuthContext from "../contexts/authContext";
 import TypographyContext from "../contexts/typographyContext";
 import CurrentProjectContext from "../contexts/currentProjectContext";
 import {Box} from "@mui/material";
+import {getAndSetJson} from "../lib/getLib";
+import {createTheme, ThemeProvider} from "@mui/material/styles";
 
 function AppWrapper({
                         children,
@@ -46,7 +48,30 @@ function AppWrapper({
         [messages]
     )
 
-    return <I18nContext.Provider value={i18nValue}>
+    const [themeSpec, setThemeSpec] = useState({
+        palette: {
+            primary: {
+                main: "#666",
+            },
+            secondary: {
+                main: "#888",
+            },
+        },
+    });
+
+    useEffect(
+        () => {
+            getAndSetJson({
+                url: "/app-resources/themes/default.json",
+                setter: setThemeSpec
+            }).then()
+        }
+    );
+
+    const theme = createTheme(themeSpec);
+
+    return <ThemeProvider theme={theme}>
+        <I18nContext.Provider value={i18nValue}>
         <TypographyContext.Provider value={typographyValue}>
             <AuthContext.Provider value={authValue}>
                 <CurrentProjectContext.Provider value={currentProjectValue}>
@@ -65,6 +90,7 @@ function AppWrapper({
             </AuthContext.Provider>
         </TypographyContext.Provider>
     </I18nContext.Provider>
+    </ThemeProvider>
 }
 
 export default AppWrapper;
