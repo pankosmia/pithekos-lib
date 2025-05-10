@@ -1,24 +1,12 @@
 import React, {useEffect, useRef, useState} from "react";
-import {getJson} from "../lib/getLib";
+import {getAndSetJson, getJson} from "../lib/getLib";
 import {enqueueSnackbar, SnackbarProvider} from "notistack";
 import {fetchEventSource} from "@microsoft/fetch-event-source";
 import {ThemeProvider, createTheme} from '@mui/material/styles';
 import AppWrapper from './AppWrapper';
 import dcopy from 'deep-copy';
 
-const theme = createTheme({
-    palette: {
-        primary: {
-            main: "#FF0000",
-        },
-        secondary: {
-            main: "#FF7700",
-        },
-    },
-});
-
 function Spa({children}) {
-    console.log("Rerender Spa")
     const [enableNet, _setEnableNet] = useState(false);
     const enabledRef = useRef(enableNet);
     const setEnableNet = nv => {
@@ -292,6 +280,30 @@ function Spa({children}) {
     const i18nValue = {i18n, setI18n, i18nRef};
     const typographyValue = {typography, setTypography, typographyRef};
     const currentProjectValue = {currentProject, setCurrentProject, currentProjectRef}
+
+    debugRef.current && console.log("Rerender Spa");
+
+    const [themeSpec, setThemeSpec] = useState({
+        palette: {
+            primary: {
+                main: "#666",
+            },
+            secondary: {
+                main: "#888",
+            },
+        },
+    });
+
+    useEffect(
+        () => {
+            getAndSetJson({
+                url: "/app-resources/themes/default.json",
+                setter: setThemeSpec
+            }).then()
+        }
+    );
+
+    const theme = createTheme(themeSpec);
 
     return <ThemeProvider theme={theme}>
         <SnackbarProvider maxSnack={6}>
