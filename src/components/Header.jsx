@@ -69,7 +69,7 @@ function Header({titleKey, widget, currentId}) {
                     <Drawer
                         open={drawerIsOpen} onClose={() => setDrawerIsOpen(false)}
                     >
-                        <Box sx={{width: 250, m: 0, p: 0}} role="presentation" onClick={() => setDrawerIsOpen(false)}>
+                        <Box sx={{width: 250, m: 0, p: 0}} role="presentation">
                             <List>
                                 <ListItem>
                                     <ListItemIcon>
@@ -95,7 +95,7 @@ function Header({titleKey, widget, currentId}) {
                                     menuItems
                                         .map(
                                             (mi, n) => mi.id === currentId ?
-                                                <ListItem key={n} disablePadding>
+                                                <ListItem key={n} disablePadding onClick={() => setDrawerIsOpen(false)}>
                                                     <ListItemButton selected={true}>
                                                         <ListItemText
                                                             primary={doI18n(`pages:${mi.id}:title`, i18nRef.current)}/>
