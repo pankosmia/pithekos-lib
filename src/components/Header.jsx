@@ -10,15 +10,15 @@ import {
     IconButton,
     List,
     ListItem,
-    ListItemButton, ListItemText,
+    ListItemButton, ListItemIcon, ListItemText,
     Menu,
-    MenuItem,
+    MenuItem, Switch,
     Toolbar,
     Typography
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import {doI18n} from "../lib/i18nLib";
-import {Cloud, CloudOff} from "@mui/icons-material";
+import {Cloud, CloudOff, UnfoldMore} from "@mui/icons-material";
 import {getJson} from "../lib/getLib";
 import {postEmptyJson} from "../lib/postLib";
 import SettingsIcon from "@mui/icons-material/Settings";
@@ -71,6 +71,16 @@ function Header({titleKey, widget, currentId}) {
                     >
                         <Box sx={{width: 250, m:0, p: 0}} role="presentation" onClick={() => setDrawerIsOpen(false)}>
                             <List>
+                                <ListItem>
+                                    <ListItemIcon>
+                                        <UnfoldMore />
+                                    </ListItemIcon>
+                                    <Switch
+                                        edge="end"
+                                        onChange={() => postEmptyJson(`/settings/debug/${debugRef.current ? "disable" : "enable"}`)}
+                                        checked={debugRef.current}
+                                    />
+                                </ListItem>
                                 {
                                     menuItems
                                         .map(
