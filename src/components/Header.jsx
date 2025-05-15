@@ -79,9 +79,13 @@ function Header({titleKey, widget, currentId}) {
                                         edge="end"
                                         onChange={
                                             ev => {
-                                                postEmptyJson(`/debug/${debugRef.current ? "disable" : "enable"}`);
-                                                ev.stopPropagation();
-                                                ev.preventDefault();
+                                                getJson(`/debug/${debugRef.current ? "disable" : "enable"}`)
+                                                    .then(
+                                                        () => {
+                                                            ev.stopPropagation();
+                                                            ev.preventDefault();
+                                                        }
+                                                    );
                                             }
                                         }
                                         checked={debugRef.current}
