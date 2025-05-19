@@ -5,7 +5,7 @@ import I18nContext from "../contexts/i18nContext";
 import AuthContext from "../contexts/authContext";
 import {
     AppBar,
-    Box,
+    Box, Divider,
     Drawer,
     IconButton,
     List,
@@ -71,26 +71,6 @@ function Header({titleKey, widget, currentId}) {
                     >
                         <Box sx={{width: 250, m: 0, p: 0}} role="presentation">
                             <List>
-                                <ListItem>
-                                    <ListItemIcon>
-                                        <UnfoldMore/>
-                                    </ListItemIcon>
-                                    <Switch
-                                        edge="end"
-                                        onChange={
-                                            ev => {
-                                                getJson(`/debug/${debugRef.current ? "disable" : "enable"}`)
-                                                    .then(
-                                                        () => {
-                                                            ev.stopPropagation();
-                                                            ev.preventDefault();
-                                                        }
-                                                    );
-                                            }
-                                        }
-                                        checked={debugRef.current}
-                                    />
-                                </ListItem>
                                 {
                                     menuItems
                                         .map(
@@ -114,6 +94,29 @@ function Header({titleKey, widget, currentId}) {
                                                 </ListItem>
                                         )
                                 }
+                                <Divider/>
+                                <ListItem>
+                                    <ListItemIcon>
+                                        <UnfoldMore/>
+                                    </ListItemIcon>
+                                    <ListItemText primary={doI18n(`components:header:more`, i18nRef.current)} />
+                                    <Switch
+                                        edge="end"
+                                        onChange={
+                                            ev => {
+                                                getJson(`/debug/${debugRef.current ? "disable" : "enable"}`)
+                                                    .then(
+                                                        () => {
+                                                            ev.stopPropagation();
+                                                            ev.preventDefault();
+                                                        }
+                                                    );
+                                            }
+                                        }
+                                        checked={debugRef.current}
+                                    />
+                                </ListItem>
+
                             </List>
                         </Box>
                     </Drawer>
