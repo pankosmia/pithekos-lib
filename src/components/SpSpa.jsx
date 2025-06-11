@@ -11,7 +11,7 @@ function SpSpa({children, titleKey, requireNet, currentId, widget, margin}) {
                 requireNet={requireNet}
                 currentId={currentId}
                 widget={widget || null}
-                margin={margin || 2}
+                margin={margin || 0}
             >
                 {children}
             </SpSpaPage>
