@@ -40,7 +40,6 @@ function SpSpaPage({titleKey, widget, margin = 2, children, requireNet = false, 
             </Box>
             <Box sx={{
                 m: margin,
-                height: "100%",
                 overflowX: "hidden",
                 overflowY: "auto",
             }}>
