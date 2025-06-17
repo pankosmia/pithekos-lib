@@ -6,7 +6,7 @@ async function postEmptyJson(url, debug=false) {
                 url,
                 ok: false,
                 status: response.status,
-                error: await response.text
+                error: await response.text()
             };
             if (debug) {
                 console.log("postEmptyJson", result);
