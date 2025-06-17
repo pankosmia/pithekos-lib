@@ -50,7 +50,7 @@ async function postJson(url, body, debug=false, contentType = "application/json"
                 url,
                 ok: false,
                 status: response.status,
-                error: await response.text
+                error: await response.text()
             };
             if (debug) {
                 console.log("postJson", result);
