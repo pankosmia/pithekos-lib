@@ -7,7 +7,7 @@ import netContext from "../contexts/netContext";
 import i18nContext from "../contexts/i18nContext";
 
 
-function SpSpaPage({titleKey, widget, margin = 2, children, requireNet = false, currentId}) {
+function SpSpaPage({titleKey, widget, margin = 0, children, requireNet = false, currentId}) {
     const {enableNet} = useContext(netContext);
     const i18n = useContext(i18nContext);
     if (requireNet && !enableNet) {
