@@ -34,7 +34,6 @@ function SpSpaPage({titleKey, widget, margin = 2, children, requireNet = false, 
                 <Header
                     titleKey={titleKey || null}
                     widget={widget || null}
-                    margin={margin || 2}
                     currentId={currentId}
                 />
             </Box>
