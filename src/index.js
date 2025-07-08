@@ -12,7 +12,7 @@ import typographyContext from "./contexts/typographyContext";
 import currentProjectContext from "./contexts/currentProjectContext"
 import {doI18n} from "./lib/i18nLib";
 import {getJson, getAndSetJson, getText} from "./lib/getLib";
-import {postEmptyJson, postJson} from "./lib/postLib";
+import {postEmptyJson, postJson, postText} from "./lib/postLib";
 import Header from "./components/Header";
 
 export {
@@ -34,5 +34,6 @@ export {
     getText,
     getAndSetJson,
     postEmptyJson,
-    postJson
+    postJson,
+    postText
 };
