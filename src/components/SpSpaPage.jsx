@@ -1,6 +1,6 @@
 import React, {useContext} from "react";
 import {Box, Grid2} from "@mui/material";
-import {BlockOutlined} from "@mui/icons-material";
+import BlockOutlined from "@mui/icons-material/BlockOutlined";
 import {doI18n} from "../lib/i18nLib";
 import Header from "./Header";
 import netContext from "../contexts/netContext";

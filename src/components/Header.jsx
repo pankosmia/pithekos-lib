@@ -18,7 +18,9 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import {doI18n} from "../lib/i18nLib";
-import {Cloud, CloudOff, UnfoldMore} from "@mui/icons-material";
+import Cloud from "@mui/icons-material/Cloud";
+import CloudOff from "@mui/icons-material/CloudOff";
+import UnfoldMore from "@mui/icons-material/UnfoldMore";
 import {getJson} from "../lib/getLib";
 import {postEmptyJson} from "../lib/postLib";
 import SettingsIcon from "@mui/icons-material/Settings";
