@@ -1,6 +1,6 @@
 import React, {useState, useContext} from 'react';
 import {
-    Box,
+    //Box,
     Switch,
     Button,
     Dialog,
@@ -9,7 +9,9 @@ import {
     DialogContentText,
     DialogTitle,
     Typography,
-    FormControlLabel
+    //FormControlLabel,
+    ListItemText,
+
 } from "@mui/material";
 import {i18nContext, doI18n} from "../index";
 
@@ -35,8 +37,15 @@ export default function InternetSwitch({internet, setInternet}) {
     };
 
     return (
-        <Box sx={{m: 0}}>
-            <Box
+        <>
+            <ListItemText primary={doI18n("components:header:connected", i18nRef.current)} />
+            <Switch 
+                edge="end"
+                onChange={handleChange}
+                checked={internet}
+                /* color="warning"  *//* size="small" */
+            />
+            {/* <Box
                 sx={{
                     backgroundColor: "#E0E0E0",
                     borderRadius: 1,
@@ -58,8 +67,7 @@ export default function InternetSwitch({internet, setInternet}) {
                         </Typography>
                     }
                 />
-            </Box>
-
+            </Box> */}
             <Dialog
                 open={open}
                 onClose={handleClose}
@@ -86,6 +94,6 @@ export default function InternetSwitch({internet, setInternet}) {
                     }}>{doI18n("components:header:accept", i18nRef.current)}</Button>
                 </DialogActions>
             </Dialog>
-        </Box>
+        </>
     )
 }
