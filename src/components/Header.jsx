@@ -169,7 +169,7 @@ function Header({titleKey, widget, currentId}) {
                 <Box sx={{flexGrow: 1, m: 0, p: 0}}>
                     {widget}
                 </Box>
-                <Box sx={{m: 0, p: 0}}>
+                {/* <Box sx={{m: 0, p: 0}}>
                     <IconButton sx={{m: 0, p: 0}} onClick={e => setAuthAnchorEl(e.currentTarget)}
                                 disabled={!enabledRef.current}>
                         {enabledRef.current ? <Cloud sx={{color: "#FFF", mr: 2}}/> :
@@ -202,7 +202,7 @@ function Header({titleKey, widget, currentId}) {
                             )
                     }
                     </Menu>
-                </Box>
+                </Box> */}
             </Toolbar>
         </AppBar>
     </Box>
