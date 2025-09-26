@@ -5,13 +5,13 @@ import I18nContext from "../contexts/i18nContext";
 import AuthContext from "../contexts/authContext";
 import {
     AppBar,
-    Box, Divider,
+    Box,
     Drawer,
     Stack,
     IconButton,
     List,
     ListItem,
-    ListItemButton, ListItemIcon, ListItemText,
+    ListItemButton, ListItemText,
     Switch,
     Menu,
     MenuItem, Switch,
@@ -25,10 +25,8 @@ import Cloud from "@mui/icons-material/Cloud";
 import CloudOff from "@mui/icons-material/CloudOff";
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
-import UnfoldMore from "@mui/icons-material/UnfoldMore";
 import {getJson} from "../lib/getLib";
 import {postEmptyJson} from "../lib/postLib";
-import SettingsIcon from "@mui/icons-material/Settings";
 import InternetSwitch from "./InternetSwitch";
 
 function Header({titleKey, widget, currentId}) {
@@ -123,7 +121,7 @@ function Header({titleKey, widget, currentId}) {
                                                 }
                                             />
                                         </ListItem>
-                                        <ListItem disablePadding onClick={() => setDrawerIsOpen(false)}>
+                                        <ListItem disablePadding >
                                             <ListItemButton 
                                                 selected={true} 
                                                 onClick={ () => { window.location.href = "/clients/settings" }} 
@@ -132,9 +130,9 @@ function Header({titleKey, widget, currentId}) {
                                                 <ListItemText primary={doI18n("pages:core-settings:title", i18nRef.current)}/>
                                             </ListItemButton> 
                                         </ListItem>
-                                        <ListItem disablePadding onClick={() => setShowAdvanced(a => !a)}>
-                                            <ListItemButton selected={true} >
-                                                <ListItemText primary='Advanced'/>
+                                        <ListItem disablePadding >
+                                            <ListItemButton selected={true} onClick={() => setShowAdvanced(a => !a)} >
+                                                <ListItemText primary={doI18n(`components:header:advanced`, i18nRef.current)}/>
                                                 {showAdvanced ? <ExpandLess /> : <ExpandMore />}
                                             </ListItemButton>
                                         </ListItem>
@@ -158,82 +156,12 @@ function Header({titleKey, widget, currentId}) {
                                                         checked={debugRef.current}
                                                     />
                                                 </ListItem>
-                                                {/* <ListItem>
-                                                    <ListItemText primary='Debug' />
-                                                    <Switch
-                                                        edge="end"
-                                                        onChange={
-                                                            ev => {
-                                                                getJson(`/debug/${debugRef.current ? "disable" : "enable"}`)
-                                                                    .then(
-                                                                        () => {
-                                                                            ev.stopPropagation();
-                                                                            ev.preventDefault();
-                                                                        }
-                                                                    );
-                                                                console.log(ev)
-                                                                setSwitches(e => !e)
-                                                            }
-                                                        }
-                                                        checked={switches}
-                                                    />
-                                                </ListItem> */}
                                             </List>
                                         </Collapse>
                                     </Box>
                                 </Stack>
                             </List>
                         </Box>
-                        {/* <Box sx={{width: 250, m: 0, p: 0}} role="presentation">
-                            <List>
-                                {
-                                    menuItems
-                                        .map(
-                                            (mi, n) => mi.id === currentId ?
-                                                <ListItem key={n} disablePadding onClick={() => setDrawerIsOpen(false)}>
-                                                    <ListItemButton selected={true}>
-                                                        <ListItemText
-                                                            primary={doI18n(`pages:${mi.id}:title`, i18nRef.current)}/>
-                                                    </ListItemButton>
-                                                </ListItem> :
-                                                <ListItem key={n} disablePadding>
-                                                    <ListItemButton
-                                                        disabled={mi.requires.net && !enabledRef.current}
-                                                        onClick={() => {
-                                                            window.location.href = mi.url
-                                                        }}
-                                                    >
-                                                        <ListItemText
-                                                            primary={doI18n(`pages:${mi.id}:title`, i18nRef.current)}/>
-                                                    </ListItemButton>
-                                                </ListItem>
-                                        )
-                                }
-                                <Divider/>
-                                <ListItem>
-                                    <ListItemIcon>
-                                        <UnfoldMore/>
-                                    </ListItemIcon>
-                                    <ListItemText primary={doI18n(`components:header:more`, i18nRef.current)} />
-                                    <Switch
-                                        edge="end"
-                                        onChange={
-                                            ev => {
-                                                getJson(`/debug/${debugRef.current ? "disable" : "enable"}`)
-                                                    .then(
-                                                        () => {
-                                                            ev.stopPropagation();
-                                                            ev.preventDefault();
-                                                        }
-                                                    );
-                                            }
-                                        }
-                                        checked={debugRef.current}
-                                    />
-                                </ListItem>
-
-                            </List>
-                        </Box> */}
                     </Drawer>
                 </Box>
                 {titleKey && titleKey.length > 0 &&
@@ -275,29 +203,6 @@ function Header({titleKey, widget, currentId}) {
                     }
                     </Menu>
                 </Box>
-                {/* <Box sx={{m: 0, p: 0}}>
-                    <InternetSwitch
-                        internet={enabledRef.current}
-                        setInternet={
-                            () => postEmptyJson(enabledRef.current ? '/net/disable' : '/net/enable', debugRef.current)
-                        }
-                    />
-                </Box> */}
-                {/* <IconButton sx={{m: 0, p: 0}}>
-                    {
-                        <SettingsIcon
-                            color="inherit"
-                            aria-label="settings"
-                            onClick={
-                                () => {
-                                    window.location.href = "/clients/settings"
-                                }
-                            }
-                            disabled={currentId.includes("settings")}
-                            sx={{ml: 2, color: currentId.includes("settings") ? "#AAA" : "#FFF"}}
-                        />
-                    }
-                </IconButton> */}
             </Toolbar>
         </AppBar>
     </Box>
