@@ -14,7 +14,7 @@ import {
     ListItemButton, ListItemText,
     Switch,
     Menu,
-    MenuItem, Switch,
+    MenuItem,
     Toolbar,
     Typography,
     Collapse
