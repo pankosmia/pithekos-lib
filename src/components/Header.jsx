@@ -39,6 +39,7 @@ function Header({titleKey, widget, currentId}) {
     const authOpen = Boolean(authAnchorEl);
     const [menuItems, setMenuItems] = useState([]);
     const [showAdvanced, setShowAdvanced] = useState(true);
+    const [internetDialogOpen, setInternetDialogOpen] = useState(false);
 
     useEffect(
         () => {
@@ -63,8 +64,32 @@ function Header({titleKey, widget, currentId}) {
             doFetch().then();
         },
         [debugRef.current]
-    )
+    );
+
     const currentUrl = menuItems.filter(i => i.id === currentId).length === 1 ? menuItems.filter(i => i.id === currentId)[0].url : "";
+
+    const toggleInternet = () => {
+        postEmptyJson(enabledRef.current ? '/net/disable' : '/net/enable', debugRef.current)
+    };
+
+     const handleInternetToggleClick = () => {
+        if (!enabledRef.current) {
+            setInternetDialogOpen(true);
+        } else {
+            toggleInternet();
+        }
+    };
+
+    const toggleDebug = (ev) => {
+        getJson(`/debug/${debugRef.current ? "disable" : "enable"}`)
+            .then(
+                () => {
+                    ev.stopPropagation();
+                    ev.preventDefault();
+                }
+            );
+    };
+
     return <Box display="flex-start" sx={{flexGrow: 1, m: 0, p: 0}}>
         <AppBar position="static" sx={{m: 0, p: 0}}>
             <Toolbar variant="dense" sx={{m: 0, p: 0}}>
@@ -113,49 +138,38 @@ function Header({titleKey, widget, currentId}) {
                                         }
                                     </Box>
                                     <Box>
-                                        <ListItem>
+                                        <ListItemButton onClick={handleInternetToggleClick}>
                                             <InternetSwitch
                                                 internet={!enabledRef.current}
-                                                setInternet={
-                                                    () => postEmptyJson(enabledRef.current ? '/net/disable' : '/net/enable', debugRef.current)
-                                                }
+                                                toggleInternet={toggleInternet}
+                                                internetDialogOpen={internetDialogOpen}
+                                                setInternetDialogOpen={setInternetDialogOpen}
                                             />
-                                        </ListItem>
+                                        </ListItemButton>
                                         <ListItem disablePadding >
                                             <ListItemButton 
-                                                selected={true} 
+                                                selected={currentId.includes("settings")} 
                                                 onClick={ () => { window.location.href = "/clients/settings" }} 
-                                                disabled={currentId.includes("settings")}
                                             >
                                                 <ListItemText primary={doI18n("pages:core-settings:title", i18nRef.current)}/>
                                             </ListItemButton> 
                                         </ListItem>
                                         <ListItem disablePadding >
-                                            <ListItemButton selected={true} onClick={() => setShowAdvanced(a => !a)} >
+                                            <ListItemButton selected={showAdvanced} onClick={() => setShowAdvanced(a => !a)} >
                                                 <ListItemText primary={doI18n(`components:header:advanced`, i18nRef.current)}/>
                                                 {showAdvanced ? <ExpandLess /> : <ExpandMore />}
                                             </ListItemButton>
                                         </ListItem>
                                         <Collapse in={showAdvanced} timeout="auto" unmountOnExit>
                                             <List component="div" disablePadding>
-                                                <ListItem sx={{ pl:4 }}>
+                                                <ListItemButton onClick={toggleDebug} sx={{ pl:4 }}>
                                                     <ListItemText primary={doI18n(`components:header:experimental_mode`, i18nRef.current)} />
                                                     <Switch
                                                         edge="end"
-                                                        onChange={
-                                                            ev => {
-                                                                getJson(`/debug/${debugRef.current ? "disable" : "enable"}`)
-                                                                    .then(
-                                                                        () => {
-                                                                            ev.stopPropagation();
-                                                                            ev.preventDefault();
-                                                                        }
-                                                                    );
-                                                            }
-                                                        }
+                                                        onChange={toggleDebug}
                                                         checked={debugRef.current}
                                                     />
-                                                </ListItem>
+                                                </ListItemButton>
                                             </List>
                                         </Collapse>
                                     </Box>

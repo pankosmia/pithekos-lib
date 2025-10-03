@@ -13,25 +13,12 @@ import {
 } from "@mui/material";
 import {i18nContext, doI18n} from "../index";
 
-export default function InternetSwitch({internet, setInternet}) {
+export default function InternetSwitch({internet, toggleInternet, internetDialogOpen, setInternetDialogOpen}) {
 
-    const [open, setOpen] = useState(false);
     const {i18nRef} = useContext(i18nContext);
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-
     const handleClose = () => {
-        setOpen(false);
-    };
-
-    const handleChange = () => {
-        if (!internet) {
-            handleClickOpen()
-        } else {
-            setInternet(false);
-        }
+        setInternetDialogOpen(false);
     };
 
     return (
@@ -39,11 +26,10 @@ export default function InternetSwitch({internet, setInternet}) {
             <ListItemText primary={doI18n("components:header:offline_mode", i18nRef.current)} />
             <Switch 
                 edge="end"
-                onChange={handleChange}
                 checked={internet}
             />
             <Dialog
-                open={open}
+                open={internetDialogOpen}
                 onClose={handleClose}
                 slotProps={{
                     paper: {
@@ -63,7 +49,7 @@ export default function InternetSwitch({internet, setInternet}) {
                 <DialogActions>
                     <Button onClick={handleClose}>{doI18n("components:header:cancel", i18nRef.current)}</Button>
                     <Button onClick={() => {
-                        setInternet(true);
+                        toggleInternet();
                         handleClose()
                     }}>{doI18n("components:header:accept", i18nRef.current)}</Button>
                 </DialogActions>
