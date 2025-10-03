@@ -138,7 +138,7 @@ function Header({titleKey, widget, currentId}) {
                                         </ListItem>
                                         <Collapse in={showAdvanced} timeout="auto" unmountOnExit>
                                             <List component="div" disablePadding>
-                                                <ListItem>
+                                                <ListItem sx={{ pl:4 }}>
                                                     <ListItemText primary={doI18n(`components:header:experimental_mode`, i18nRef.current)} />
                                                     <Switch
                                                         edge="end"
