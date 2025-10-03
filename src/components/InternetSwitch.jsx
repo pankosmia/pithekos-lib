@@ -36,7 +36,7 @@ export default function InternetSwitch({internet, setInternet}) {
 
     return (
         <>
-            <ListItemText primary={doI18n("components:header:connected", i18nRef.current)} />
+            <ListItemText primary={doI18n("components:header:offline_mode", i18nRef.current)} />
             <Switch 
                 edge="end"
                 onChange={handleChange}
