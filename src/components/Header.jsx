@@ -115,7 +115,7 @@ function Header({titleKey, widget, currentId}) {
                                     <Box>
                                         <ListItem>
                                             <InternetSwitch
-                                                internet={enabledRef.current}
+                                                internet={!enabledRef.current}
                                                 setInternet={
                                                     () => postEmptyJson(enabledRef.current ? '/net/disable' : '/net/enable', debugRef.current)
                                                 }
