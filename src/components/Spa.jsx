@@ -1,6 +1,7 @@
 import React, {useEffect, useRef, useState} from "react";
+import { styled } from '@mui/material/styles';
 import {getJson} from "../lib/getLib";
-import {enqueueSnackbar, SnackbarProvider} from "notistack";
+import {enqueueSnackbar, MaterialDesignContent, SnackbarProvider} from "notistack";
 import {fetchEventSource} from "@microsoft/fetch-event-source";
 import AppWrapper from './AppWrapper';
 import dcopy from 'deep-copy';
@@ -282,8 +283,34 @@ function Spa({children}) {
 
     debugRef.current && console.log("Rerender Spa");
 
+    const CustomSnackbarContent = styled(MaterialDesignContent)(() => ({
+        '&.notistack-MuiContent-error': {
+            backgroundColor: '#FDEDED',
+            color: '#D32F2F'
+        },
+        '&.notistack-MuiContent-info': {
+            backgroundColor: '#E5F6FD',
+            color: '#0288D1'
+        },
+        '&.notistack-MuiContent-warning': {
+            backgroundColor: '#FFF4E5',
+            color: '#EF6C00'
+        },
+        '&.notistack-MuiContent-success': {
+            backgroundColor: '#EDF7ED',
+            color: '#2E7D32'
+        },
+    }));
 
-    return <SnackbarProvider maxSnack={6}>
+    return <SnackbarProvider
+        Components={{
+            error: CustomSnackbarContent,
+            info: CustomSnackbarContent,
+            warning: CustomSnackbarContent,
+            success: CustomSnackbarContent
+        }}
+        maxSnack={6}
+    >
         <AppWrapper
             netValue={netValue}
             debugValue={debugValue}
