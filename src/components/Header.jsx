@@ -2,7 +2,6 @@ import React, {useContext, useEffect, useState} from "react";
 import NetContext from "../contexts/netContext";
 import DebugContext from "../contexts/debugContext";
 import I18nContext from "../contexts/i18nContext";
-import AuthContext from "../contexts/authContext";
 import {
     AppBar,
     Box,
@@ -13,16 +12,12 @@ import {
     ListItem,
     ListItemButton, ListItemText,
     Switch,
-    Menu,
-    MenuItem,
     Toolbar,
     Typography,
     Collapse
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import {doI18n} from "../lib/i18nLib";
-import Cloud from "@mui/icons-material/Cloud";
-import CloudOff from "@mui/icons-material/CloudOff";
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import {getJson} from "../lib/getLib";
@@ -33,12 +28,10 @@ function Header({titleKey, widget, currentId}) {
     const {enabledRef} = useContext(NetContext);
     const {debugRef} = useContext(DebugContext);
     const {i18nRef} = useContext(I18nContext);
-    const {authRef} = useContext(AuthContext);
-    const [authAnchorEl, setAuthAnchorEl] = useState(null);
     const [drawerIsOpen, setDrawerIsOpen] = useState(false);
-    const authOpen = Boolean(authAnchorEl);
     const [menuItems, setMenuItems] = useState([]);
     const [showAdvanced, setShowAdvanced] = useState(true);
+    const [internetDialogOpen, setInternetDialogOpen] = useState(false);
 
     useEffect(
         () => {
@@ -63,8 +56,36 @@ function Header({titleKey, widget, currentId}) {
             doFetch().then();
         },
         [debugRef.current]
-    )
+    );
+
     const currentUrl = menuItems.filter(i => i.id === currentId).length === 1 ? menuItems.filter(i => i.id === currentId)[0].url : "";
+
+    const disableInternet = () => {
+        postEmptyJson('/net/disable', debugRef.current)
+    };
+
+    const enableInternet = () => {
+        postEmptyJson('/net/enable', debugRef.current)
+    };
+
+    const toggleDebug = (ev) => {
+        getJson(`/debug/${debugRef.current ? "disable" : "enable"}`)
+            .then(
+                () => {
+                    ev.stopPropagation();
+                    ev.preventDefault();
+                }
+            );
+    };
+
+    const handleInternetToggleClick = () => {
+        if (!enabledRef.current) {
+            setInternetDialogOpen(true);
+        } else {
+            disableInternet();
+        }
+    };
+
     return <Box display="flex-start" sx={{flexGrow: 1, m: 0, p: 0}}>
         <AppBar position="static" sx={{m: 0, p: 0}}>
             <Toolbar variant="dense" sx={{m: 0, p: 0}}>
@@ -113,49 +134,36 @@ function Header({titleKey, widget, currentId}) {
                                         }
                                     </Box>
                                     <Box>
-                                        <ListItem>
                                             <InternetSwitch
-                                                internet={enabledRef.current}
-                                                setInternet={
-                                                    () => postEmptyJson(enabledRef.current ? '/net/disable' : '/net/enable', debugRef.current)
-                                                }
+                                                enableInternet={enableInternet}
+                                                handleInternetToggleClick={handleInternetToggleClick}
+                                                internetDialogOpen={internetDialogOpen}
+                                                setInternetDialogOpen={setInternetDialogOpen}
                                             />
-                                        </ListItem>
                                         <ListItem disablePadding >
                                             <ListItemButton 
-                                                selected={true} 
+                                                selected={currentId.includes("settings")} 
                                                 onClick={ () => { window.location.href = "/clients/settings" }} 
-                                                disabled={currentId.includes("settings")}
                                             >
                                                 <ListItemText primary={doI18n("pages:core-settings:title", i18nRef.current)}/>
                                             </ListItemButton> 
                                         </ListItem>
                                         <ListItem disablePadding >
-                                            <ListItemButton selected={true} onClick={() => setShowAdvanced(a => !a)} >
+                                            <ListItemButton selected={showAdvanced} onClick={() => setShowAdvanced(a => !a)} >
                                                 <ListItemText primary={doI18n(`components:header:advanced`, i18nRef.current)}/>
                                                 {showAdvanced ? <ExpandLess /> : <ExpandMore />}
                                             </ListItemButton>
                                         </ListItem>
                                         <Collapse in={showAdvanced} timeout="auto" unmountOnExit>
                                             <List component="div" disablePadding>
-                                                <ListItem>
+                                                <ListItemButton onClick={toggleDebug} sx={{ pl:4 }}>
                                                     <ListItemText primary={doI18n(`components:header:experimental_mode`, i18nRef.current)} />
                                                     <Switch
                                                         edge="end"
-                                                        onChange={
-                                                            ev => {
-                                                                getJson(`/debug/${debugRef.current ? "disable" : "enable"}`)
-                                                                    .then(
-                                                                        () => {
-                                                                            ev.stopPropagation();
-                                                                            ev.preventDefault();
-                                                                        }
-                                                                    );
-                                                            }
-                                                        }
+                                                        onChange={toggleDebug}
                                                         checked={debugRef.current}
                                                     />
-                                                </ListItem>
+                                                </ListItemButton>
                                             </List>
                                         </Collapse>
                                     </Box>
@@ -169,40 +177,6 @@ function Header({titleKey, widget, currentId}) {
                 <Box sx={{flexGrow: 1, m: 0, p: 0}}>
                     {widget}
                 </Box>
-                {/* <Box sx={{m: 0, p: 0}}>
-                    <IconButton sx={{m: 0, p: 0}} onClick={e => setAuthAnchorEl(e.currentTarget)}
-                                disabled={!enabledRef.current}>
-                        {enabledRef.current ? <Cloud sx={{color: "#FFF", mr: 2}}/> :
-                            <CloudOff sx={{color: "#AAA", mr: 2}}/>}
-                    </IconButton>
-                    <Menu
-                        id="auth-menu"
-                        anchorEl={authAnchorEl}
-                        open={authOpen}
-                        onClose={() => setAuthAnchorEl(null)}
-                        anchorOrigin={{
-                            vertical: 'top',
-                            horizontal: 'left',
-                        }}
-                        transformOrigin={{
-                            vertical: 'top',
-                            horizontal: 'left',
-                        }}
-                    >{
-                        Object.entries(authRef.current)
-                            .map(
-                                (mi, n) => <MenuItem
-                                    key={n}
-                                    onClick={() => {
-                                        window.location.href = mi[1].isActive ? `/gitea/logout/${mi[0]}/` : `/gitea/login/${mi[0]}/${currentUrl}`;
-                                    }}
-                                >{
-                                    `${mi[0]} ${mi[1].isActive ? "✓" : "❌"}`
-                                }</MenuItem>
-                            )
-                    }
-                    </Menu>
-                </Box> */}
             </Toolbar>
         </AppBar>
     </Box>
