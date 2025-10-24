@@ -1,17 +1,7 @@
-import React, {useContext} from 'react';
-import {
-    Switch,
-    Button,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogContentText,
-    DialogTitle,
-    Typography,
-    ListItem,
-    ListItemText,
-
-} from "@mui/material";
+import {useContext} from 'react';
+import { Box, Chip } from "@mui/material";
+import AirplanemodeInactiveOutlinedIcon from '@mui/icons-material/AirplanemodeInactiveOutlined';
+import AirplanemodeActiveOutlinedIcon from '@mui/icons-material/AirplanemodeActiveOutlined';
 import i18nContext from "../contexts/i18nContext";
 import netContext from "../contexts/netContext";
 import {doI18n} from "../lib/i18nLib";
@@ -27,14 +17,11 @@ export default function InternetSwitch({enableInternet, handleInternetToggleClic
     };
 
     return (
-        <ListItem>
-            <ListItemText
-                primary={doI18n("components:header:offline_mode", i18nRef.current)}
-            />
-            <Switch 
-                edge="end"
-                checked={!enabledRef.current}
-                onClick={handleInternetToggleClick}
+        <Box>
+            <Chip
+                icon={enabledRef.current ? <AirplanemodeInactiveOutlinedIcon /> : <AirplanemodeActiveOutlinedIcon />}
+                label={doI18n("components:header:offline_mode", i18nRef.current)}
+                onClick={handleInternetToggleClick}  
             />
             <Dialog
                 open={internetDialogOpen}
@@ -62,6 +49,6 @@ export default function InternetSwitch({enableInternet, handleInternetToggleClic
                     }}>{doI18n("components:header:accept", i18nRef.current)}</Button>
                 </DialogActions>
             </Dialog>
-        </ListItem>
+        </Box>
     )
 }

@@ -134,12 +134,6 @@ function Header({titleKey, widget, currentId}) {
                                         }
                                     </Box>
                                     <Box>
-                                            <InternetSwitch
-                                                enableInternet={enableInternet}
-                                                handleInternetToggleClick={handleInternetToggleClick}
-                                                internetDialogOpen={internetDialogOpen}
-                                                setInternetDialogOpen={setInternetDialogOpen}
-                                            />
                                         <ListItem disablePadding >
                                             <ListItemButton 
                                                 selected={currentId.includes("settings")} 
@@ -176,6 +170,14 @@ function Header({titleKey, widget, currentId}) {
                     <Typography variant="h6" sx={{m: 0, p: 0}}>{doI18n(titleKey, i18nRef.current)}</Typography>}
                 <Box sx={{flexGrow: 1, m: 0, p: 0}}>
                     {widget}
+                </Box>
+                <Box sx={{m: 0, p: 0}}>
+                    <InternetSwitch
+                        enableInternet={enableInternet}
+                        handleInternetToggleClick={handleInternetToggleClick}
+                        internetDialogOpen={internetDialogOpen}
+                        setInternetDialogOpen={setInternetDialogOpen}
+                    />
                 </Box>
             </Toolbar>
         </AppBar>
