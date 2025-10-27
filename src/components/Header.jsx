@@ -96,7 +96,7 @@ function Header({titleKey, widget, currentId}) {
                     <Drawer
                         open={drawerIsOpen} onClose={() => setDrawerIsOpen(false)}
                     >
-                        <Box sx={{width: 250, minHeight: '98vh', m: 0, p: 0}} role="presentation">                         
+                        <Box sx={{width: "100%", minHeight: '98vh', m: 0, p: 0}} role="presentation">                         
                             <List sx={{ height: '100%', width: '100%' }}>
                                 <Stack
                                     direction="column"
