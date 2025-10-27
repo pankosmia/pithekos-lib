@@ -30,7 +30,9 @@ export default function InternetSwitch({enableInternet, handleInternetToggleClic
             <Chip
                 icon={enabledRef.current ? <AirplanemodeInactiveOutlinedIcon /> : <AirplanemodeActiveOutlinedIcon />}
                 label={doI18n("components:header:offline_mode", i18nRef.current)}
-                onClick={handleInternetToggleClick}  
+                onClick={handleInternetToggleClick}
+                color={enabledRef.current ? "appbar-chip-inactive" : "secondary"}
+                variant="Filled"  
             />
             <Dialog
                 open={internetDialogOpen}
