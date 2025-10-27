@@ -96,7 +96,7 @@ function Header({titleKey, widget, currentId}) {
                     <Drawer
                         open={drawerIsOpen} onClose={() => setDrawerIsOpen(false)}
                     >
-                        <Box sx={{width: '100%', minHeight: '98vh', m: 0, p: 0}} role="presentation">                         
+                        <Box sx={{width: 250, minHeight: '98vh', m: 0, p: 0}} role="presentation">                         
                             <List sx={{ height: '100%', width: '100%' }}>
                                 <Stack
                                     direction="column"
@@ -143,7 +143,7 @@ function Header({titleKey, widget, currentId}) {
                                             </ListItemButton> 
                                         </ListItem>
                                         <ListItem disablePadding >
-                                            <ListItemButton selected={showAdvanced} onClick={() => setShowAdvanced(a => !a)} >
+                                            <ListItemButton onClick={() => setShowAdvanced(a => !a)} >
                                                 <ListItemText primary={doI18n(`components:header:advanced`, i18nRef.current)}/>
                                                 {showAdvanced ? <ExpandLess /> : <ExpandMore />}
                                             </ListItemButton>
