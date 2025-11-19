@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useState, useRef} from "react";
 import NetContext from "../contexts/netContext";
 import DebugContext from "../contexts/debugContext";
 import I18nContext from "../contexts/i18nContext";
@@ -32,6 +32,9 @@ function Header({titleKey, widget, currentId}) {
     const [menuItems, setMenuItems] = useState([]);
     const [showAdvanced, setShowAdvanced] = useState(true);
     const [internetDialogOpen, setInternetDialogOpen] = useState(false);
+    const [drawerWidth, setDrawerWidth] = useState('auto');
+    const [widthLocked, setWidthLocked] = useState(false);
+    const measurementRef = useRef(null);
 
     useEffect(
         () => {
@@ -57,6 +60,23 @@ function Header({titleKey, widget, currentId}) {
         },
         [debugRef.current]
     );
+
+    useEffect(() => {
+        let timeoutId;
+        if (drawerIsOpen && !widthLocked) {
+          timeoutId = setTimeout(() => {
+            if (measurementRef.current) {
+              const width = measurementRef.current.clientWidth;
+              
+              if (width > 0) {
+                setDrawerWidth(`${width}px`); 
+                setWidthLocked(true);
+              }
+            }
+          }, 50);
+          return () => clearTimeout(timeoutId);
+        }
+    }, [drawerIsOpen, widthLocked]);
 
     const currentUrl = menuItems.filter(i => i.id === currentId).length === 1 ? menuItems.filter(i => i.id === currentId)[0].url : "";
 
@@ -94,7 +114,9 @@ function Header({titleKey, widget, currentId}) {
                         <MenuIcon sx={{color: "#FFF"}}/>
                     </IconButton>
                     <Drawer
-                        open={drawerIsOpen} onClose={() => setDrawerIsOpen(false)}
+                        open={drawerIsOpen} 
+                        onClose={() => setDrawerIsOpen(false)}
+                        slotProps={{ paper: { sx: { width: drawerWidth, overflow: 'hidden' } } }}
                     >
                         <Box sx={{width: "100%", minHeight: '98vh', m: 0, p: 0}} role="presentation">                         
                             <List sx={{ height: '100%', width: '100%' }}>
@@ -142,7 +164,7 @@ function Header({titleKey, widget, currentId}) {
                                                 <ListItemText primary={doI18n("pages:core-settings:title", i18nRef.current)}/>
                                             </ListItemButton> 
                                         </ListItem>
-                                        <ListItem disablePadding >
+                                        <ListItem sx={{width: drawerWidth}} disablePadding >
                                             <ListItemButton onClick={() => setShowAdvanced(a => !a)} >
                                                 <ListItemText primary={doI18n(`components:header:advanced`, i18nRef.current)}/>
                                                 {showAdvanced ? <ExpandLess /> : <ExpandMore />}
@@ -160,6 +182,27 @@ function Header({titleKey, widget, currentId}) {
                                                 </ListItemButton>
                                             </List>
                                         </Collapse>
+                                        <Box
+                                            ref={measurementRef}
+                                            sx={{
+                                                visibility: 'hidden', 
+                                                position: 'absolute', 
+                                                whiteSpace: 'nowrap',
+                                                top: 0,
+                                                left: 0,
+                                            }}
+                                        >
+                                            <List component="div" disablePadding>
+                                                <ListItemButton onClick={toggleDebug} sx={{ pl:4 }}>
+                                                    <ListItemText primary={doI18n(`components:header:experimental_mode`, i18nRef.current)} />
+                                                    <Switch
+                                                        edge="end"
+                                                        onChange={toggleDebug}
+                                                        checked={debugRef.current}
+                                                    />
+                                                </ListItemButton>
+                                            </List>
+                                        </Box>
                                     </Box>
                                 </Stack>
                             </List>
