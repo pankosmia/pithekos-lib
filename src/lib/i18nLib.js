@@ -10,11 +10,11 @@ const doInterpolatedI18n = (key, values, source = {}) => {
         }
     }
 
-    if (!source || !Object.prototype.hasOwnProperty.call(source, key)) {
+    const template = source && source[key];
+    if (!template) {
         throw new Error(`No localized string found for key: ${key}`);
     }
 
-    const template = source[key];
     if (typeof template !== "string") {
         throw new TypeError("The localized string template must be a string");
     }
