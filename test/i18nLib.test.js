@@ -55,3 +55,14 @@ test("rejects a mismatch between placeholders and values", () => {
         RangeError
     );
 });
+
+test("rejects malformed interpolation placeholders", () => {
+    assert.throws(
+        () => doInterpolatedI18n("greeting", [], {greeting: "Hello %%"}),
+        {name: "SyntaxError", message: "Invalid interpolation placeholder: %%"}
+    );
+    assert.throws(
+        () => doInterpolatedI18n("greeting", [], {greeting: "Hello %foo%"}),
+        {name: "SyntaxError", message: "Invalid interpolation placeholder: %foo%"}
+    );
+});
