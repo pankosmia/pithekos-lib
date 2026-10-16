@@ -5,7 +5,8 @@
   "description": "Library functions for Pithekos",
   "main": "dist/index.js",
   "scripts": {
-    "build": "babel src --out-dir dist"
+    "build": "babel src --out-dir dist",
+    "test": "npm run build && node --test"
   },
   "repository": {
     "type": "git",

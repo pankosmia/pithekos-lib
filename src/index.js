@@ -10,7 +10,7 @@ import bcvContext from "./contexts/bcvContext";
 import authContext from "./contexts/authContext";
 import typographyContext from "./contexts/typographyContext";
 import currentProjectContext from "./contexts/currentProjectContext"
-import {doI18n} from "./lib/i18nLib";
+import {doI18n, do_interpolated_i18n} from "./lib/i18nLib";
 import {getJson, getAndSetJson, getText} from "./lib/getLib";
 import {postEmptyJson, postJson, postText} from "./lib/postLib";
 import Header from "./components/Header";
@@ -30,6 +30,7 @@ export {
     netContext,
     bcvContext,
     doI18n,
+    do_interpolated_i18n,
     getJson,
     getText,
     getAndSetJson,
