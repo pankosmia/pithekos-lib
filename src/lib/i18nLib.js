@@ -4,8 +4,10 @@ const do_interpolated_i18n = (key, values, source = {}) => {
     if (!Array.isArray(values)) {
         throw new TypeError("Interpolation values must be an array of strings");
     }
-    if (!values.every(value => typeof value === "string")) {
-        throw new TypeError("Interpolation values must be strings");
+    for (const value of values) {
+        if (typeof value !== "string") {
+            throw new TypeError("Interpolation values must be strings");
+        }
     }
 
     const template = doI18n(key, source);
@@ -18,9 +20,8 @@ const do_interpolated_i18n = (key, values, source = {}) => {
         throw new RangeError("The number of interpolation values must match the placeholders");
     }
 
-    return template.split("%%").reduce((result, part, index) => {
-        return result + part + (values[index] === undefined ? "" : values[index]);
-    }, "");
+    let index = 0;
+    return template.replace(/%%/g, () => values[index++]);
 };
 
 export {doI18n, do_interpolated_i18n};

@@ -1,6 +1,6 @@
 const {test} = require("node:test");
 const assert = require("node:assert/strict");
-const {do_interpolated_i18n} = require("../dist/lib/i18nLib");
+const {do_interpolated_i18n} = require("../dist");
 
 test("interpolates values in a localized template", () => {
     assert.equal(
@@ -26,6 +26,7 @@ test("rejects non-array interpolation values", () => {
 test("rejects non-string interpolation values", () => {
     assert.throws(() => do_interpolated_i18n("The %%", [42]), TypeError);
     assert.throws(() => do_interpolated_i18n("The %%", [null]), TypeError);
+    assert.throws(() => do_interpolated_i18n("The %%", Array(1)), TypeError);
 });
 
 test("rejects a mismatch between placeholders and values", () => {
