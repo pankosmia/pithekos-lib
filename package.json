@@ -6,7 +6,7 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "babel src --out-dir dist",
-    "test": "npm run build && node --test"
+    "test": "npm run build && tape 'test/**/*.test.js'"
   },
   "repository": {
     "type": "git",
@@ -18,8 +18,11 @@
     "url": "https://github.com/pankosmia/pithekos-lib/issues"
   },
   "homepage": "https://github.com/pankosmia/pithekos-lib#readme",
-  "dependencies": {},
   "devDependencies": {
+    "@babel/cli": "^7.26.4",
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0",
+    "@babel/preset-react": "^7.26.3",
     "tape": "^5.10.1"
   }
 }
