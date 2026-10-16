@@ -19,13 +19,18 @@ const doInterpolatedI18n = (key, values, source = {}) => {
         throw new TypeError("The localized string template must be a string");
     }
 
-    const placeholders = template.match(/%%/g) || [];
+    const placeholders = template.match(/%\d+%/g) || [];
     if (placeholders.length !== values.length) {
         throw new RangeError("The number of interpolation values must match the placeholders");
     }
 
-    let index = 0;
-    return template.replace(/%%/g, () => values[index++]);
+    return template.replace(/%(\d+)%/g, (placeholder, position) => {
+        const index = Number(position) - 1;
+        if (index < 0 || index >= values.length) {
+            throw new RangeError(`Placeholder ${placeholder} has no matching interpolation value`);
+        }
+        return values[index];
+    });
 };
 
 export {doI18n, doInterpolatedI18n};
