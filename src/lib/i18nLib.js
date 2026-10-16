@@ -1,6 +1,6 @@
 const doI18n = (key, source) => source[key] || key;
 
-const do_interpolated_i18n = (key, values, source = {}) => {
+const doInterpolatedI18n = (key, values, source = {}) => {
     if (!Array.isArray(values)) {
         throw new TypeError("Interpolation values must be an array of strings");
     }
@@ -10,7 +10,11 @@ const do_interpolated_i18n = (key, values, source = {}) => {
         }
     }
 
-    const template = doI18n(key, source);
+    if (!source || !Object.prototype.hasOwnProperty.call(source, key)) {
+        throw new Error(`No localized string found for key: ${key}`);
+    }
+
+    const template = source[key];
     if (typeof template !== "string") {
         throw new TypeError("The localized string template must be a string");
     }
@@ -24,4 +28,4 @@ const do_interpolated_i18n = (key, values, source = {}) => {
     return template.replace(/%%/g, () => values[index++]);
 };
 
-export {doI18n, do_interpolated_i18n};
+export {doI18n, doInterpolatedI18n};
