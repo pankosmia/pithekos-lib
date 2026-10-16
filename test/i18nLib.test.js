@@ -1,6 +1,6 @@
 const {test} = require("node:test");
 const assert = require("node:assert/strict");
-const {do_interpolated_i18n} = require("../dist");
+const {do_interpolated_i18n} = require("../dist/lib/i18nLib");
 
 test("interpolates values in a localized template", () => {
     assert.equal(
