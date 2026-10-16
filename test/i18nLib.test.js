@@ -1,5 +1,4 @@
-const {test} = require("node:test");
-const assert = require("node:assert/strict");
+import test from "tape";
 const {doInterpolatedI18n} = require("../dist/lib/i18nLib");
 
 test("interpolates values in a localized template", () => {
